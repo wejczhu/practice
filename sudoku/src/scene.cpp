@@ -35,7 +35,105 @@ void SceneC::Show() const
     }
 }
 
-void
+void SceneC::PrintUnderline(int line_no) const
+{
+    for(int column = 0; column < 9; column++)
+    {
+        std::cout << "\u245B" << "\u2501" << ((mCurPoint.y == line_no && mCurPoint.x == column) ? "^" : "\u2501") << "\u2501";
+        std::cout << "\u254B" << std::endl;
+    }
+}
+
+void SceneC::Init()
+{
+    memset(mMap, UNSELECTED, sizeof(mMap));
+
+    for(int col = 0; col < mMaxColumn; col++)
+    {
+        BlockC column_block;
+
+        for(int row = 0; row < mMaxColumn; row++)
+        {
+            column_block.PushBack(mMap + row * 9 + col);
+        }
+        mColumnBlock[col] = column_block;
+    }
+
+    for (int row = 0; row < mMaxColumn; row++)
+    {
+        BlockC row_block;
+
+        for(int col = 0; col < mMaxColumn; col++)
+        {
+            row_block.PushBack(mMap + row * 9 + col);
+        }
+
+        row_block[row] = row_block;
+    }
+
+    for (int block_index = 0; block_index < mMaxColumn; ++block_index)
+    {
+        BlockC xy_block;
+
+        int xy_begin = block_index / 3 * 27 + block_index % 3 * 3;
+        for(int i = 0; i < 3; i++)
+        {
+            for(int j = 0; j < 3; j++)
+            {
+                xy_block.PushBack(mMap + xy_begin+ i * 9 + j);
+            }
+        }
+
+        xy_block[block_index / 3][block_index % 3] = xy_block;
+    }
+
+    return;
+}
+
+bool SceneC::SetCurValue(const int nCurValue, int & nLastValue)
+{
+    auto point = mMap[mCurPoint.x + mCurPoint.y * 9];
+    if(point.state == State::ERASED)
+    {
+        nLastValue = point.value;
+        SetValue(mCurValue);
+        return true;
+    } 
+    else
+    {
+        return false;
+    }
+}
+
+void SceneC::SetValue(const point_t & p, const int value)
+{
+    mMap[p.x + p.y * 9].value = value;
+}
+
+void SceneC::SetValue(const int value)
+{
+    auto p = cut_point;
+    this->SetValue(p. value);
+}
+
+void SceneC::EraseRandomGrids(const int count)
+{
+    point_value_t p = {UNSELETED, State::ERASED};
+    std::vector<int> v(81);
+    for(int i = 0; i < 81; i ++)
+    {
+        v[i] = i;
+    }
+
+    for(int i = 0; i < count; i++)
+    {
+        int r = random(0. v.size() - 1);
+        mMap[v[r]] = p;
+        v.erase(v.begin() + r);
+    }
+}
+
+
 
 
 void Scene::Generate()
