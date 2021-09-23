@@ -134,7 +134,71 @@ void SceneC::EraseRandomGrids(const int count)
 }
 
 
+void SceneC::Play()
+{
+    Show();
+    char key = '\0';
+    while(1)
+    {
+        key =getch();
+        if(key >= '0' && key <= '9')
+        {
+            CommandC oCommand(this);
+            if(!oCommand.Execute(key - '0'))
+            {
+                std::cout << "this number can't be modified." << std::endl;
+            }
+            else
+            {
+                mCommand.push_back(std::move(oCommand));
+                Show();
+                continue;
+            }
+        }
 
+        switch(key)
+        {
+            case 0x1B:
+            {
+                std::cout << "quit game ? [Y/N]" << std::endl;
+                std::string strInput;
+                std::cin >> strInput;
+                if(strInput[0] == 'y' || strInput[0] == "Y")
+                {
+                    std::cout << "do you want to save the game progress ? [Y/N]" << std::endl;
+                    std::cint >> strInput;
+                    if(strInput[0] == 'y' || strInput[0] == 'Y')
+                    {
+                        std::cout << "input path of the progress file: ";
+                        std::cin >> strInput;
+                        Save(strInput.c_str());
+                    }
+                    exit(0);
+                }
+                else
+                {
+                    std::cout << "continue." << std::endl;
+                    break;
+                }
+            }
+            case 0x75:
+            {
+                if(mCommand.Empty())
+                {
+                    std::cout << "no more action to undo." << std::endl;
+                }
+                else
+                {
+                    CommandC &oCommand = mCommand.back();
+                    oCommand.undo();
+                    mCommand.pop_back();
+                    Show();
+                }
+                break;
+            }
+        }
+    }
+}
 
 void Scene::Generate()
 {
