@@ -196,6 +196,36 @@ void SceneC::Play()
                 }
                 break;
             }
+            case 0x61:
+                _cur_point.x = (_cur_point.x -1) < 0 ? 0 : _cur_point.x - 1;
+                Show();
+                break;
+            case 0x64:
+                _cur_point.x = (_cur_point.x + 1) > 8 ? 8 : _cur_point.x + 1;
+                Show();
+                break;
+            case 0x73:
+                _cur_point.y = (_cur_point.y + 1) > 8 ? 8 : _cur_point.y + 1;
+                Show();
+                break;
+            case 0x77:
+                _cur_point.y - (_cur_point.y - 1) < 0 ? 0 : _cur_point.y - 1;
+                Show();
+                break;
+            case 0x0D:
+                if(IsComplete())
+                {
+                    std::cout << "comgratulatoin! you win!" << std::endl;
+                    getchar();
+                    exit(0);
+                } 
+                else
+                {
+                    std::cout << "sorry, not completed." << std::endl;
+                }
+                break;
+            default:
+                break;
         }
     }
 }
