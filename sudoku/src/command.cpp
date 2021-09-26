@@ -13,7 +13,7 @@ CommandC::CommandC(SceneC* Owner, const point_t &point, int preValue, int curVal
 , mCurValue(curValue)
 {}
 
-command::CommandC(const CommandC &rhs)
+CommandC::CommandC(const CommandC &rhs)
 : mOwner(rhd.mOwner)
 , mPoint(rhs.mPoint)
 , mPreValue(rhs.mPreValue)
