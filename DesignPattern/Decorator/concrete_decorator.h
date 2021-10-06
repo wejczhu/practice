@@ -24,7 +24,7 @@ public:
 class Mocha : public CondimentDecorator
 {
 public:
-    Mocha(Ibeverage *beverage) : CondimentDecorator(beverage){}
+    Mocha(IBeverage *beverage) : CondimentDecorator(beverage){}
 
     string Name()
     {
