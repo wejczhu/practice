@@ -16,7 +16,6 @@ public:
 protected:
     std::string m_task;
     std::string m_weapon;
-
 };
 
-#endif
+#endif // FLYWEITHG_H

@@ -18,9 +18,28 @@ public:
 
     virtual void mission() override
     {
-        std::cout << "Terrorist with weapon " + m_weapon + "," + 
+        std::cout << "Terrorist with weapon " + m_weapon + "," + " Task is " + m_task << std::endl;
+    }
+};
+
+class CounterTerrorist : public IPlayer
+{
+public:
+    CounterTerrorist()
+    {
+        m_task = "Diffuse bomb";
+    }
+
+    virtual void assignWeapon(std::string weapon) override
+    {
+        m_weapon = weapon;
+    }
+
+    virtual void mission() override
+    {
+        std::cout << "Counter Terrorist with weapon " + m_weapon + "," + "Task is" + m_task  << endl;
     }
 };
 
 
-#endif
+#endif // CONCRETE_FLYWEITHG_H
