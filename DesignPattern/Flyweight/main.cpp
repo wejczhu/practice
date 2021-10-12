@@ -1,6 +1,6 @@
 #include "concrete_flyweight.h"
 #include "flyweight_factory.h"
-#include <ctime>
+#include <ctime> 
 
 std::map<std::string, IPlayer*> PlayerFactory::m_map = std::map<std::string, IPlayer*>();;
 
@@ -21,7 +21,7 @@ int main()
     for(int i = 0; i < 10; i++)
     {
         int typeIndex = rand() % playerLen;
-        int weaponIndex = rand() % weaponsLen;
+        int weaponIndex = rand() % weaponLen;
         std::string type = s_playerType[typeIndex];
         std::string weapon = s_weapons[weaponIndex];
 
