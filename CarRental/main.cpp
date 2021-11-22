@@ -83,10 +83,10 @@ car avail[1000];
 
 void fullscreen()
 {
-    keybd_event(VK_MENU,)
-    keybd_event(VK_RETURN,)
-    keybd_event(VK_RETURN,
-    keybd_event(VK_MENU,)
+    keybd_event(VK_MENU, 0x38, 0, 0);
+    keybd_event(VK_RETURN, 0x1c, 0, 0);
+    keybd_event(VK_RETURN, KEYEVENTF_KEYUP, 0);
+    keybd_event(VK_MENU, 0X38, KEYEVENTF_KEYUP,0);
 }
 
 const string currentDateTime()
@@ -98,4 +98,20 @@ const string currentDateTime()
     strftime(buf, sizeof(buf), "%d/%m/%Y TIME: %X", &tstruct);
     
     return buf;
+}
+
+const string Date()
+{
+    time_t now = time(0);
+    struct tm tstruct;
+    char buf[80];
+    tstruct = *localtime(&now);
+    strftime(buf, sizeof(buf), "%d/%m/%Y TIME: %x", &tstruct);
+
+    return buf;
+}
+
+void time()
+{
+    int i = 0;
 }
