@@ -114,4 +114,35 @@ const string Date()
 void time()
 {
     int i = 0;
+    while (i < 5)
+    {
+        Boarder();
+        gotoxy(20, 20);
+        std::cout << "\n\n\n\n\n\t |\t\t\t\tDATE: " << std::endl;
+        Sleep(900);
+        system("cls");
+        i++;
+    }
+    menu();
+}
+
+void date()
+{
+    cout << "\n\t |\t\t\t\t\tDATE: " << Date() << endl;
+}
+
+void readUserPass()
+{
+    ifstream ifs;
+    ifs.open("UserPass.txt");
+
+    int i;
+    while(!ifs.eof())
+    {
+        ifs>>userPass[i].ID;
+        ifs.ignore();
+        ifs.getline(userPass[i].passWord, 20);
+        i++;
+    }
+    ifs.close();
 }
