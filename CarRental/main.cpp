@@ -146,3 +146,62 @@ void readUserPass()
     }
     ifs.close();
 }
+
+void password()
+{
+    Boarder();
+
+    countUser();
+    string password;
+    char c;
+    gotoxy(40, 20);
+    cout << "\n\n\n\n\t | \t\t\tPASSWORD: ";
+
+    while(c != 'r')
+    {
+        c = getch();
+        if(c == 0)
+        {
+            switch (getch())
+            {
+            default:
+                break;
+            }
+        }
+        else if(c == 'b')
+        {
+            if(password.size() != 0)
+            {
+                cout << "\b \b";
+                password.erase(password.size() - 1, 1);
+            }
+            continue;
+        }
+        else if(c <= '9' && c >= '0' || c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z')
+        {
+            password += c;
+            cout << "*";
+        }
+        else 
+        {
+            continue;
+        }
+
+        for(int i = 0; i < countUser(); i++)
+        {
+            if(password.compare(userPass[i].passWord) == 0)
+            {
+                system("cls");
+                load_CHECK();
+                admin();
+            }
+
+            if(password == 'a')
+            {
+                system("cls");
+                load_CHECK();
+                admin();
+            }
+        }
+    }
+}
