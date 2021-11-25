@@ -205,3 +205,33 @@ void password()
         }
     }
 }
+
+void gotoxy(int x, int y)
+{
+    COORD coord;
+    coord.X = x;
+    coord.Y = y;
+
+    SetConsoleCursorPosition(GEtStdHandle(STD_OUTPUT_HANDLE), coord);
+}
+
+void load()
+{
+    Boarder();
+    int timer = 5 + rand() % 20;
+
+    int row, col, r, c, q;
+    gotoxy(65, 34);
+    cout << "BOOTING UP...";
+    gotoxy(60, 36);
+    for(r = 1; r<= timer; r++)
+    {
+        for(q = 0; q<= 100000000;q++)
+        {
+            printf("%c", 177);
+        }
+    }
+    sleep(100);
+    system("cls");
+
+}
