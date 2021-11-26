@@ -235,3 +235,43 @@ void load()
     system("cls");
 
 }
+
+void load_CHECK()
+{
+    Boarder();
+    int timer = rand() % 5 + 1;
+    int row, col, r, c, q;
+    gotoxy(65, 34);
+    printf("UPDATING DATABASE...");
+    gotoxy(60, 36);
+    for(r = 1; r < timer; r++)
+    {
+        for(q = 0; q <= 1000000000; q++)
+        {
+            printf("%c", 177);
+        }
+    }
+    Sleep(100);
+    system("cls");
+}
+
+void load_EXIT()
+{
+    Boarder();
+
+    int row, col, r, c, q;
+    int timer = rand() % 5 + 1;
+    gotoxy(65, 34);
+    printf("LOGGING OFF...");
+    gotoxy(60, 36);
+    for(r = 1; r <= timer; r++)
+    {
+        for( q = 0; q <= 100000000; q++)
+        {
+            printf("%c", 177);
+
+        }
+    }
+    Sleep(100);
+    system("cls");
+}
