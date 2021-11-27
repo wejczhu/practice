@@ -275,3 +275,34 @@ void load_EXIT()
     Sleep(100);
     system("cls");
 }
+
+void GotoXY(int x, int y)
+{
+    HANDLE a;
+    COORD b;
+    fflush(stdout);
+    b.X = x;
+    b.Y = y;
+    a = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleCursorPosition(a, b);
+}
+
+void Boarder()
+{
+    int i;
+    system("cls");
+    for(i = 10; i < 140; i++)
+    {
+        GotoXY(i, 10);
+        cout << "=";
+        goto(i, 58);
+        cout << "=";
+    }
+    for(i = 10; i < 58; i++)
+    {
+        GotoXY(10, i);
+        cout << "|";
+        GotoXY(140, i);
+        cout << "|";
+    }
+}
