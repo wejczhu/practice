@@ -306,3 +306,28 @@ void Boarder()
         cout << "|";
     }
 }
+
+void art()
+{
+    Boarder();
+    gotoxy(0, 20);
+    ifstream ifs("art.txt");
+    string Lines = "";
+
+    if(ifs)
+    {
+        while(ifs.good())
+        {
+            string TempLine;
+            getline(ifs, TempLine);
+            TempLine += "\n";
+
+            Lines += TempLine;
+        }
+
+        cout << Lines;
+        date();
+    }
+
+    ifs.close();
+}
