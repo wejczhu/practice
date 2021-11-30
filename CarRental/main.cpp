@@ -331,3 +331,27 @@ void art()
 
     ifs.close();
 }
+
+void welcome()
+{
+    Boarder();
+    gotoxy(0, 30);
+    ifstream ifs("welcome.txt");
+    string Lines = "";
+
+    if(ifs)
+    {
+        while(ifs.good())
+        {
+            string TempLine;
+            getline(ifs, TempLine);
+            TempLine += "\n";
+            Lines += TempLine;
+        }
+        cout << Lines;
+    }
+
+    cout << "\n\t | \t\t\t\t\t\t\t";
+    ifs.close();
+    sleep(1000)；
+}
