@@ -386,3 +386,20 @@ void exitArt()
 
     Lines += TempLine;
 }
+
+void rate(int hout, int j)
+{
+    int hour_24, hout_12, hour_1;
+    int total, total_24, totol_12, total_1;
+
+    hour_24 = hour / 24;
+    hour_12 = (hour - hour_24 * 24) / 12;
+    houtr_1 = (hour - hour_24 * 24 - hour_12 * 12) / 1;
+
+    total_24 = hour_24 * rent[j].rate_per_day;
+    total_12 = hour_12 * rent[j].rate_per_half;
+    total_1 = hour_1 * rent[j].rate_per_hour;
+
+    total = total_24 + totol_12 + total_1;
+    return total; 
+}
