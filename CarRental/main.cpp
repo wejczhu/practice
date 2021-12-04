@@ -423,3 +423,22 @@ void customerData()
 
     ifs.close();
 }
+
+int carCount()
+{
+    int numOfCar = 0;
+    ifstream ifs("car rental.txt");
+
+    string word;
+    while(getline(ifs, word))
+    {
+        if(!word.empty())
+        {
+            numOfCar++;
+        }
+    }
+
+    ifs.close();
+
+    return numOfCar;
+}
