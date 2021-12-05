@@ -442,3 +442,22 @@ int carCount()
 
     return numOfCar;
 }
+
+int custCount()
+{
+    int numOfCust = 0;
+    ifstream ifs("Custromer.txt");
+
+    string word;
+    while(getline(ifs, word))
+    {
+        if(!word.empty())
+        {
+            numOfCust++;
+        }
+    }
+
+    ifs.close();
+
+    return numOfCust;
+}
