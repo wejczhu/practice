@@ -461,3 +461,42 @@ int custCount()
 
     return numOfCust;
 }
+
+int countUser()
+{
+    int numOfCust = 0;
+    ifstream ifs("UserPass.txt");
+
+    string word;
+    while(getline(ifs, word))
+    {
+        if(!word.empty())
+        {
+            numOfCust++;
+        }
+    }
+
+    ifs.close();
+
+    return numOfCust;
+}
+
+int countAvail()
+{
+    int numOfCust = 0;
+    ifstream ifs("available.txt");
+
+    string word;
+    while(getline(ifs, word))
+    {
+        if(!word.empty())
+        {
+            numOfCust++
+        }
+    }
+
+    ifs.close();
+
+    return numOfCust;
+}
+
