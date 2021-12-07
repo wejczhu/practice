@@ -500,3 +500,14 @@ int countAvail()
     return numOfCust;
 }
 
+void displayCar()
+{
+    cout << "\t  |  Plate Number\tBrand\t Model\tCapacity    Colour   Rate Per Hour   Rate Per 12 Hour   Rate Per 24 Hour   Transmission" << endl;
+	cout << "\t  |  =======================================================================================================================" << endl;
+    for(int i = 0; i < carCount(); i++)
+    {
+        cout << "\t | " << rent[i].plate_num << "\t"
+    }
+
+}
+
