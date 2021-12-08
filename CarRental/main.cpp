@@ -511,3 +511,38 @@ void displayCar()
 
 }
 
+void existingCust()
+{
+    int tempCust, hour, userID;
+    char charSelect[10];
+    tempCust = custCount() - 1;
+    ofstream log;
+    log.open("Log.txt", fstream::app);
+    ofstream ofs;
+    ofs.open("temp.txt");
+    cout << "\n\n\n\n";
+    cout << endl;
+
+    cout << "\n\n";
+    art();
+    cout << endl;
+
+    cout << "\n\t | \t\t\t\tPlease enter user ID: ";
+    cin >> userID;
+
+    for(int i = 0; i < custCount(); i++)
+    {
+        if(userID == cust[i].id)
+        {
+            cout << "\n\t | \t\t\t\tWECLOME";
+            cout << cust[i].name;
+            log << "\nNAME: " << cust[i].name;
+            cout << "\t | \tID";
+            cout << cust[i].id;
+            cout << "\n\n";
+            log << "\nPHONE: " << cust[i].phone;
+            log << "\nIC: " << cust[i].ic;
+        }
+    }
+}
+
