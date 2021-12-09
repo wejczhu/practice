@@ -544,5 +544,52 @@ void existingCust()
             log << "\nIC: " << cust[i].ic;
         }
     }
+
+    dispAvailCar();
+
+    cout << "\n\n\t | \t\t\t\t\tPlease select car";
+    cout << "\n\t | \t\t\t\t\tPlate Number: ";
+    cin >> ws;
+    cin.getline(carSelect, 10);
+    int x = countAvail();
+    for(int i = 0; i < countAvail(); i++)
+    {
+        if(strcmp(carSelect, avail[i].plate_num) != 0)
+        {
+            ofs << avail[i].plate_num;
+            ofs << " ";
+            ofs << avail[i].brand;
+            ofs << " ";
+            ofs << avail[i].model;
+            ofs << " ";
+            ofs << avail[i].capacity;
+            ofs << " ";
+            ofs << avail[i].colour;
+            ofs << " ";
+            ofs << avail[i].rate_per_hour;
+            ofs << " ";
+            ofs << avail[i].rate_per_half;
+            ofs << " ";
+            ofs << avail[i].rate_per_day;
+            ofs << " ";
+            ofs << avail[i].transmission;
+            if(i != countAvail())
+            {
+                ofs << endl;
+            }
+        }
+    }
+
+    ofs.close();
+
+    remove("available.txt");
+    remove("temp.txt", "available.txt");
+    cout << "\t | \t\t\t\t\tHours of rent : ";
+    cin >> hour;
+    int j;
+    for(int i = 0; i < carCount(); i++)
+    {
+        
+    }
 }
 
