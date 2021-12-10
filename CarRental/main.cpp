@@ -589,7 +589,27 @@ void existingCust()
     int j;
     for(int i = 0; i < carCount(); i++)
     {
-        
+        if(strcmp(carSelect, rent[i].plate_num) == 0)
+        {
+            j = 1;
+
+            log << "\nCAR: " << rent[i].plate_num;
+            log << "\nBRAND:" << rent[i].brand;
+            log << "\nMODULE: " << rent[i].model;
+            log << "\nHOUR: " << hour;
+            log << "\nPAYMENT: " << rate(hour, i);
+        }
     }
+
+    cout << "\t |\t\t\t\tPrice for " << hour << " hours of rent : RM ";
+    cout << rate(hour, j);
+
+    log << "\nDATE: " << currentDateTime();
+    log << "\n=====================================";
+    log.close();
+
+    Sleep(5000);
+    system("cls");
+    menu();
 }
 
