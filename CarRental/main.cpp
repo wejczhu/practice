@@ -613,3 +613,26 @@ void existingCust()
     menu();
 }
 
+void newCustData()
+{
+    cout << "\n\n";
+    art();
+    cout << endl;
+
+    availCar();
+    ofstream ofs, log;
+    ofs.open("Customer.txt", fstream::app);
+    log.open("Log.txt", fstream::app);
+    ofs << endl;
+    ofstream  availTemp;
+    availTemp.open("availtemp.txt");
+    cout << "\n\n\n\n";
+    cout << endl;
+
+    cust[custCount].id = custCount() + 1001;
+    ofs << cust[custCount()].id;
+    ofs << ";";
+
+    cout << "\n\n";
+    cout << 
+}
