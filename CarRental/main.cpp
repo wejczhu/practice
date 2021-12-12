@@ -634,5 +634,39 @@ void newCustData()
     ofs << ";";
 
     cout << "\n\n";
-    cout << 
+    cout <<  "\m\t | \t\t\t\t\t Please enter the data below: " << endl;
+
+    cout << "\n\t |\t\t\t\t\t Name : ";
+    cin >> ws;
+    cin.getline(cust[custCount()].name, 100);
+    ofs << Cust[custCount()].name<< ";";
+    log << "\nNAME: " << cust[custCount()].name;
+
+    cout << "\t | \t\t\t\t\t Phone NUmber : ";
+    cin.getline(cust[custCount()].phone, 15);
+    ofs << cust[custCount()].phone;
+    ofs << ";";
+    log << "\nPHONE: " << cust[custCount()].phone;
+
+    cout << "\t | \t\t\t\t\t IC : ";
+    cin.getline(cust[custCount()].ic, 15);
+    ofs << cust[custCount()].ic;
+    ofs << ";";
+    log << "\nIC: " << cust[custCount()].ic;
+
+    cout << "\t | \t\t\t\t\t Address : ";
+    cin.getline(cust[custCount()].address, 1500);
+    ofs << cust[custCount()].address;
+    
+
+    ofs.close();
+
+    system("cls");
+
+    int tempCust, hour;
+    char carSelect[10];
+    tempCust = custCount() - 1;
+
+    
+
 }
