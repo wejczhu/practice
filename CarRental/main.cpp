@@ -667,6 +667,27 @@ void newCustData()
     char carSelect[10];
     tempCust = custCount() - 1;
 
-    
+    cout << "\n\n\n\n";
+    art();
+    cout << endl;
 
+    cout << "\n\t |\t\t\tWELCOME ";
+    cout << cust[tempCust].name;
+    cout << "\t | \tID";
+    cout << cust[tempCust].id;
+    cout << "\n\n";
+
+    dispAvailCar();
+
+    cout << "\n\n\t | \tPlease select car");
+    cout << "\n\t |\tPleate Number: ";
+    cint >> ws;
+    cin.getline(carSelect, 10);
+
+    int x = countAvail();
+
+    for(int i = 0; i < countAvail(); i++)
+    {
+        
+    }
 }
