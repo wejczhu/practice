@@ -686,8 +686,70 @@ void newCustData()
 
     int x = countAvail();
 
-    for(int i = 0; i < countAvail(); i++)
+	for(int i = 0; i < countAvail(); i++)
+	{
+		if (strcmp(carSelect,avail[i].plate_num) != 0)
+		{
+			availTemp << avail[i].plate_num;
+			availTemp << " ";
+			availTemp << avail[i].brand;
+			availTemp << " ";
+			availTemp << avail[i].model;
+			availTemp << " ";
+			availTemp << avail[i].capacity;
+			availTemp << " ";
+			availTemp << avail[i].colour;
+			availTemp << " ";
+			availTemp << avail[i].rate_per_hour;
+			availTemp << " ";
+			availTemp << avail[i].rate_per_half;
+			availTemp << " ";
+			availTemp << avail[i].rate_per_day;
+			availTemp << " ";
+			availTemp << avail[i].transmission;
+			if(i != countAvail())
+			{
+				availTemp<<endl;
+			}
+			
+			
+		}
+	}
+
+    ofs.close();
+
+    remote("available.txt");
+
+    rename("availtemp.txt", "available.txt");
+
+    cout << "\t | \tHousrs of rent: ";
+    cint >> hour;
+    int j;
+    for(int i = 0; i < carCount(); i++)
     {
-        
+        if(strcmp(carSelect, rent[i].plate_num) == 0)
+        {
+            j = i;
+            rate(hour, j);
+            log<< "\nCAR: " < rent[i].plate_num;
+            log << "\nBRAND: " << rent[i].brand;
+            log << "\nMODEL: " << rent[i].model;
+            log << "\nHOUR: " << hour;
+            log << "\nPAYMENT: " << rate(hour, j);
+        }
     }
+
+    cout << "\n\t | \tPrice for" << hour << "hours of rent: RM";
+    cout << rate(hour, j);
+
+    log << "\nDATE: " << currentDateTime();
+    log << "\n====================================";
+    log.close();
+    availTemp.close();
+    availCar();
+
+    Sleep(5000);
+    system("cls");
+    menu();
+
 }
