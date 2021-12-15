@@ -753,3 +753,25 @@ void newCustData()
     menu();
 
 }
+
+void newCarData()
+{
+    cout << "\n\n";
+    art();
+    cout << endl;
+
+    ofstream ofs;
+    ofs.open("car rental.txt", fstream::app);
+    ofs<< endl;
+
+    int newCar = carCount(); + 1;
+    cout << "\n\n";
+    cout << "\n\t |\t\t\t\t\t Please enter the car data below: "<< endl;
+    cout << "\n\t |\t\t\t\t\t Plate Number : ";
+    cin >> ws;
+    cin.getline(rent[newCar].plate_num, 10);
+    ofs << rent[newCar].plate_nmu;
+    ofs << "";
+
+    
+}
