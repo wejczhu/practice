@@ -773,5 +773,25 @@ void newCarData()
     ofs << rent[newCar].plate_nmu;
     ofs << "";
 
+    cout << "\t |\t\t\t\t\t Brand : ";
+    cin.getline(rent[newCar].brand, 20);
+    ofs << rent[newCar].brand;
+    ofs << " ";
+
+    cout << "\t |\t\t\t\t\t Model : ";
+    cin.getline(rent[newCar].model, 20);
+    ofs << rent[newCar].model;
+    ofs << " ";
+
+    cout << "\t |\t\t\t\t\t Capacity : ";
+    cin  >> rent[newCar].capacity;
+    ofs << rent[newCar].capacity;
+    ofs << " ";
+
+    cout << "\t |\t\t\t\t\t Colour : ";
+    cin >> ws;
+    cin.getline(rent[newCar].colour, 20);
+    ofs << rent[newCar].colour;
+    ofs << " ";
     
 }
