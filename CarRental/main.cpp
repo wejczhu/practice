@@ -794,4 +794,13 @@ void newCarData()
     ofs << rent[newCar].colour;
     ofs << " ";
     
+
+    cout << "\t |\t\t\t\t\t Rate Per Hour : ";
+    cin >> rent[newCar].rate_per_hour;
+    ofs << rent[newCar].rate_per_hour;
+    ofs << " ";
+
+    cout << "\t |\t\t\t\t\t Rate Per 12 Hour : ";
+    cin >> rent[newCar].rate_per_half;
+    of
 }
