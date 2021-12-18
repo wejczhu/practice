@@ -802,5 +802,35 @@ void newCarData()
 
     cout << "\t |\t\t\t\t\t Rate Per 12 Hour : ";
     cin >> rent[newCar].rate_per_half;
-    of
+    ofs  << rent[newCar].rate_per_half;
+    ofs << " ";
+
+    cout << "\t |\t\t\t\t\t Rate Per 24 Hour: ";
+    cin >> rent[newCar].rate_per_day;
+    ofs << rent[newCar].rate_per_day;
+    ofs << " ";
+
+    cout << "\t |\t\t\t\t\t Tranmission (A/M) : ";
+    cin >> ws;
+    cin.getline(rent[newCar].transmission, 6);
+    ofs << rent[newCar].transmission;
+
+    ofs.close();
+    system("cls");
+
+    carData();
+    admin();
+}
+
+void availCar()
+{
+    ifstream ifs;
+    ifs.open("available.txt");
+    int carNum = 0;
+
+    while(!ifs.eof())
+    {
+        ifs.getline(avail[carNum].plate_num, 10, " ");
+        
+    }
 }
