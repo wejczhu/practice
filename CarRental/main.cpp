@@ -831,6 +831,37 @@ void availCar()
     while(!ifs.eof())
     {
         ifs.getline(avail[carNum].plate_num, 10, " ");
+        ifs.getline(avail[carNum].brand, 20, '');
+        ifs.getline(avail[carNum].model, 20, ' ');
+        ifs >> avail[carNum].capacity;
+        ifs.ignore();
+        ifs.getline(avail[carNum].colour, 20, '');
+        ifs >> avail[carNum].rate_per_hour;
+        ifs.ignore();
+        ifs>>avail[carNum].rate_per_half;
+        ifs.ignore();
+        ifs >> avail[carNum].rate_per_day;
+        ifs.ignore();
+        ifs.getline(avail[carNum].transmission, 6);
+        carNum++;
+        ifs>>ws;
+    }
+
+    ifs.close();
+}
+
+void resetAvail()
+{
+    Boarder();
+    ofstream ofs;
+    osf.open("temp2.txt");
+
+    for(int i = 0; i < carCount(); i++)
+    {
+        ofs << rent[i].plate_num;
+        ofs << " ";
+        osf << rent[i].brand;
+        ofs << " ";
         
     }
 }
