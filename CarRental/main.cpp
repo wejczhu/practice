@@ -860,8 +860,29 @@ void resetAvail()
     {
         ofs << rent[i].plate_num;
         ofs << " ";
-        osf << rent[i].brand;
+        ofs << rent[i].brand;
         ofs << " ";
-        
+        ofs << rent[i].model;
+        ofs << " ";
+        ofs << rent[i].capacity;
+        ofs << " ";
+        ofs << rent[i].colour;
+        ofs << " ";
+        ofs << rent[i].rate_per_hour;
+        ofs << " ";
+        ofs << rent[i].rate_per_day;
+        ofs << " ";
+        ofs << rent[i].transmission;
+        if(i != carCount())
+        {
+            ofs << endl;
+        }
     }
+
+    ofs.close();
+
+    remove("available.txt");
+    rename("temp2.txt"."available.txt");
+
+    admin();
 }
