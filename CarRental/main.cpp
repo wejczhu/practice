@@ -886,3 +886,48 @@ void resetAvail()
 
     admin();
 }
+
+void newUserPass()
+{
+    Boarder();
+    ofstream ofs;
+    ofs.open("UserPass.txt", fstream::app);
+
+    userPass[countUser()].ID = countUser() + 1;
+
+    string passowrd;
+    char c;
+    gotoxy(40, 20);
+    cout << "\n\n\n\n\t |\t\t\tID(DEFAULT): " << userPass[countUser()].ID;
+    cout << "\n\t |\t\t\tADD PASSWORD: ";
+    while(c != '\r')
+    {
+        c = getch();
+        if(c == 0)
+        {
+            switch(getch())
+            {
+                default:
+                    break;
+            }
+        }
+        else if(c == '\b')
+        {
+            if(passowrd.size() != 0)
+            {
+                password.erase(password.size() - 1, 1);
+            }
+        }
+        continue;
+    }
+
+    strcpy(userPass[countUser()].passWord, password.c_str());
+
+    ofs << userPass[countUser()].ID;
+    ofs << ";";
+    ofs << userPass[countUser()].passWord;
+    ofs << endl;
+
+    system("cls");
+    admin();
+}
