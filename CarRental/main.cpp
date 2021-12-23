@@ -931,3 +931,35 @@ void newUserPass()
     system("cls");
     admin();
 }
+
+void showCarData()
+{
+    int x;
+    cout << "\n\n";
+    cout << endl;
+
+    cout << "\t | Plate Number \tBrand\t Model\tCapacity Colour Rate Per Hour Rate Per 12 Hour Rate Per 24 Hour Transmission" << endl;
+    cout << "\t ============================================================================================================" << endl;
+	for (int i = 0; i < carCount(); i++)
+	{
+		cout << "\t  |  " << rent[i].plate_num << "\t\t" << rent[i].brand << "\t " << rent[i].model << "\t   " << rent[i].capacity << "\t     "
+			 << rent[i].colour << "\t  " <<rent[i].rate_per_hour << "\t\t    " << rent[i].rate_per_half << "\t\t    " << rent[i].rate_per_day 
+			 << "\t\t       " << rent[i].transmission << endl;
+	}
+	cout << "\n\n";
+	cout<<"\n\t  |\t\t\t\t\t  1. BACK";
+	cout<<"\n\t  |\t\t\t\t\t  2. MAIN MENU"<<endl<<"\n\n";
+	cout<<"\t  |\t\t\t\t\tINPUT :";
+	cin >> x;
+
+    system("cls");
+    if (x == 1)
+    {
+        admin();
+    }
+
+    if( x ==2)
+    {
+        menu();
+    }
+}
