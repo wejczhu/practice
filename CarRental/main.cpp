@@ -963,3 +963,31 @@ void showCarData()
         menu();
     }
 }
+
+void carData()
+{
+    ifstream ifs;
+    ifs.open("car rental.txt");
+    int carNum = 0;
+
+    while(!ifs.eof())
+    {
+        ifs.getline(rent[carNum].plate_num, 10, "");
+        ifs.getline(rent[carNum].brand, 20, "");
+        ifs.getline(rent[carNum].model, 20, " ");
+        ifs >> rent[carNum].capacity;
+        ifs.ignore();
+        ifs.getline(rent[carNum].colour, 20, " ");
+        ifs >> rent[carNum],rate_per_hour;
+        ifs.ignore();
+        ifs >> rent[carNum].rate_per_half;
+        ifs.ignore();
+        ifs >> rent[carNum].rate_per_day;
+        ifs.ignore();
+        ifs.getline(rent[carNum].transmission, 6);
+        carNum++;
+        ifs >> ws;
+    }
+
+    ifs.close();
+}
