@@ -991,3 +991,14 @@ void carData()
 
     ifs.close();
 }
+
+void admin()
+{
+    int x;
+    cout << "\n\n\n\n";
+    art();
+    cout << endl;
+
+    cout << "\n\t |\t\t\t\t\t\t\t 1. ADD ADMIN";
+    
+}
