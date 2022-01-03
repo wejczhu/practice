@@ -999,6 +999,45 @@ void admin()
     art();
     cout << endl;
 
-    cout << "\n\t |\t\t\t\t\t\t\t 1. ADD ADMIN";
-    
+	cout<<"\n\t  |\t\t\t\t\t\t\t  1. ADD ADMIN";
+	cout<<"\n\t  |\t\t\t\t\t\t\t  2. SHOW DATA";
+	cout<<"\n\t  |\t\t\t\t\t\t\t  3. ADD CAR";
+	cout<<"\n\t  |\t\t\t\t\t\t\t  4. DELETE CAR";
+	cout<<"\n\t  |\t\t\t\t\t\t\t  5. RESET AVAILABLE CAR";
+	cout<<"\n\t  |\t\t\t\t\t\t\t  6. LOG OFF"<<endl<<"\n";
+	cout<<"\t  |\t\t\t\t\t\t\tINPUT :";
+	cin>>x;
+
+    system("cls");
+
+    if(x == 6)
+    {
+        load_EXIT();
+        menu();
+    }
+
+    else if(x == 2)
+    {
+        showCarData();
+    }
+
+    else if(x == 3)
+    {
+        newCarData();
+    }
+
+    else if(x == 4)
+    {
+        delCar();
+    }
+    else if(x == 1)
+    {
+        newUserPass();
+    }
+
+    else if(x ==5)
+    {
+        system("cls");
+    }
+    resetAvail();
 }
