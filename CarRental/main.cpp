@@ -1041,3 +1041,79 @@ void admin()
     }
     resetAvail();
 }
+
+void user()
+{
+    int x;
+    art();
+    cout << endl;
+
+    cout << "\n\t |\t\t\t\t\t\t\t 1.NEW";
+    cout << "\n\t |\t\t\t\t\t\t\t 2.EXISTING";
+    cout << "\t\t |\t\t\t\t\t\t\t 3.MAIN MENU";
+    cout << "\n\n\t |\t\t\t\t\t\t\tINPUT: ";
+    cin >> x;
+
+    system("cls");
+    if(x == 1)
+    {
+        newCustData();
+    }
+    else if(x == 2)
+    {
+        system("cls");
+        load_UPDATE();
+        existingCust();
+    }
+    else if(x == 3)
+    {
+        menu();
+    }
+}
+
+void menu()
+{
+    int x;
+    art();
+    
+    cout << endl;
+
+    cout << "\n\t |\t\t\t\t\t\t\t 1.ADMIN";
+    cout << "\n\t |\t\t\t\t\t\t\t 2. USER";
+    cout << "\n\t |\t\t\t\t\t\t\t 3.T%c";
+    cout << "\n\t |\t\t\t\t\t\t\tINPUT: ";
+    cin >> x;
+
+    system("cls");
+    if(x == 2)
+    {
+        user();
+    }
+    else if(x == 1)
+    {
+        password();
+    }
+
+    if(x == 3)
+    {
+        tNc();
+        getch();
+    }
+
+    if(x == 5)
+    {
+        time();
+    }
+    else if(x == 4)
+    {
+        cout << "\n\n\n\n";
+        exitArt();
+        Sleep(1000);
+        exit(0);
+    }
+    else if(x == 6)
+    {
+        fullscreen();
+        menu();
+    }
+}
