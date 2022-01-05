@@ -1117,3 +1117,40 @@ void menu()
         menu();
     }
 }
+
+void delCar()
+{
+    char plate[10];
+    ofstream ofs;
+    ofs.open("temp.txt");
+
+    cout << "\n\n\n\n";
+    art();
+    cout << endl;
+    displayCar();
+
+    cout << "\n\n";
+    cout << "\t | \t\tEnger the car plate number that are going to be deleted (CAPITAL LETER W/OUT SPACE)" << endl;
+    cout << "\t | \t\t\t\t\t\t\t";
+    cin >> ws;
+    cin.getline(plate, 10);
+    int x = carCount();
+    for(int i = 0; i < carCount(); i++)
+    {
+        if(strcmp(plate, rent[i].plate_num) != 0)
+        {
+            ofs << rent[i].plate_num;
+            ofs << " ";
+            ofs << rent[i].brand;
+            ofs << " ";
+            ofs << rent[i].model;
+            ofs << "  ";
+            ofs << rent[i].capacity;
+            ofs << " ";
+            ofs << rent[i].colour;
+            ofs << " ";
+            
+
+        }
+    }
+}
