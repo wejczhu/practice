@@ -1149,8 +1149,25 @@ void delCar()
             ofs << " ";
             ofs << rent[i].colour;
             ofs << " ";
-            
-
+            ofs << rent[i].rate_per_hour;
+            ofs << " ";
+            ofs << rent[i].reate_per_half;
+            ofs << " ";
+            ofs << rent[i].rate_per_day;
+            ofs << " ";
+            ofs << rent[i].transmission;
+            if(i != carCount())
+            {
+                ofs << endl;
+            }
         }
     }
+    
+    ofs.close();
+    remove("car rental.txt");
+    rename("temp.txt", "car rental.txt");
+
+    system("cls");
+    carData();
+    admin();
 }
