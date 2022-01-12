@@ -1171,3 +1171,13 @@ void delCar()
     carData();
     admin();
 }
+
+void tNc()
+{
+    art();
+    cout << endl;
+    cout << "\n\t |\t\t\t1. MINIMUM RENT TIME IS 2 HOURS";
+    cout << "\n\t |\t\t\t2. RISK BY YOUR OWN";
+    cout << "\n\t |\t\t\t3. INCASE ACCIDENT, ALL CONSTING IS PIAD BY THE DRIVER";
+    
+}
