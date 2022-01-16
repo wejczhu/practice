@@ -1174,10 +1174,32 @@ void delCar()
 
 void tNc()
 {
-    art();
-    cout << endl;
-    cout << "\n\t |\t\t\t1. MINIMUM RENT TIME IS 2 HOURS";
-    cout << "\n\t |\t\t\t2. RISK BY YOUR OWN";
-    cout << "\n\t |\t\t\t3. INCASE ACCIDENT, ALL CONSTING IS PIAD BY THE DRIVER";
-    
+	art();
+	cout<<endl;
+	cout<<"\n\t  |\t\t\t1. MINIMUM RENT TIME IS 3 HOURS";
+	cout<<"\n\t  |\t\t\t2. RISK BY YOUR OWN";
+	cout<<"\n\t  |\t\t\t3. INCASE ACCIDENT, ALL COSTING IS PAID BY THE DRIVER";
+	cout<<"\n\t  |\t\t\t4. PREPARE ITEM AS BELOW";
+	cout<<"\n\t  |\t\t\t     \3COPY OF IC, LICENSE";
+	cout<<"\n\t  |\t\t\t     \3DEPOSIT (BASED ON CAR TYPE)";
+	cout<<"\n\t  |\t\t\t5. ADDITIONAL CHARGE IF LATE";
+	cout<<"\n\t  |\t\t\t6. SAFE DRIVE!";
+	cout<<"\n\n\n\n\t  |\t\t\t                             PRESS ANY KEY TO CONTINUE :)";
+	cout<<"\n\t  |\t\t\t                                                            ";
+	
+	getch();
+	menu();
+}
+
+main()
+{
+    fullscreen();
+    welcome();
+    load();
+    Boarder();
+    readUserPass();
+    availCar();
+    customerData();
+    carData();
+    menu();
 }
