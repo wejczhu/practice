@@ -28,3 +28,15 @@ void cbot_send(cosnt struct cbot *cbot, const char *dest, const char *format, ..
     sc_cb_destroy(&cb);
     va_end(va);
 }
+
+void cbot_me(const struct cbot *cbot, const char *dest, const char *format, ...)
+{
+    va_list va;
+    struct sc_charbuf cb;
+    va_start(va, format);
+    sc_cb_init(&cb, 1024);
+    sc_cb_vprintf(&cb, (char*) format, va);
+    cbot->backend_ops->me(cbot, dest, cb.buf);
+    sc_cb_destroy(&cb);
+    va_end(va);
+}
