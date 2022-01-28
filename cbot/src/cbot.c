@@ -40,3 +40,15 @@ void cbot_me(const struct cbot *cbot, const char *dest, const char *format, ...)
     sc_cb_destroy(&cb);
     va_end(va);
 }
+
+void cbot_op(const struct cbot *cbot, const char *channel, const char *person)
+{
+    cbot->backend_ops->op(cbot, channel, person);
+}
+
+void cbot_join(const struct cbot *cbot, const char *channel,
+               const char *password)
+{
+    cbot->backend_ops->nick(cbot, newnick);
+}
+
