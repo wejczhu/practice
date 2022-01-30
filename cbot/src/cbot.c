@@ -52,3 +52,23 @@ void cbot_join(const struct cbot *cbot, const char *channel,
     cbot->backend_ops->nick(cbot, newnick);
 }
 
+cbot_nick(const struct cbot *cbot, const char *newnick)
+{
+    cbot->backend_ops->nick(cbot, newnick);
+}
+
+int cbot_addressed(const struct cbot *bot, const char *message)
+{
+    int increment = strlen(bot->name);
+    if(strncmp(bot->name, message , increment) == 0)
+    {
+        while(isspace(message[increment]) || ispunct(message[increment]))
+        {
+            increment++;
+        }
+
+        return increment;
+    }
+
+    return 0;
+}
