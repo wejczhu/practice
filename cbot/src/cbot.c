@@ -72,3 +72,16 @@ int cbot_addressed(const struct cbot *bot, const char *message)
 
     return 0;
 }
+
+struct cbot *cbot_create(void)
+{
+    struct cbot *cbot = calloc(1, sizeof(*cbot));
+    for(int i = 0; i < _CBOT_NUM_EVENT_TYPES_; i++)
+    {
+        sc_list_init(&cbot->handlers[i]);
+    }
+    sc_list_init(&cbot->init_channels);
+    sc_list_init(&cbot->plugins);
+    OpenSSL_add_all_digests();
+    return cbot;
+}
