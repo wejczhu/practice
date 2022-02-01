@@ -85,3 +85,26 @@ struct cbot *cbot_create(void)
     OpenSSL_add_all_digests();
     return cbot;
 }
+
+static void conf_error(config_t *conf, char *op)
+{
+    const char *file, *text;
+    int line;
+    file = config_error_file(conf);
+    line = config_error_line(conf);
+    text = config_error_text(conf);
+    if(file)
+    {
+        fprintf(stderr, "%s:%d: %s(cbot config op %s)", file , line
+                text, op);
+    }
+    else
+    {
+        fprintf(stderr, "cbot config (%s): %s (line %d", op, text,
+                line);
+    }
+}
+
+
+
+
