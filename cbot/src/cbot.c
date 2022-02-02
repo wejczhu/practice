@@ -105,6 +105,18 @@ static void conf_error(config_t *conf, char *op)
     }
 }
 
+static char *conf_str_default(config_setting_t *setting, const char *name,
+                              char *default_)
+{
+    const char *str = NULL;
+    int rv = config_setting_lookup_string(setting, name, &str);
+    if(rv == CONFIG_FALUSE)
+    {
+        str = default_;
+    }
+
+    rturn strdup(str);
+}
 
 
 
