@@ -118,5 +118,31 @@ static char *conf_str_default(config_setting_t *setting, const char *name,
     rturn strdup(str);
 }
 
+static struct cbot_channel_conf* add_init_channel(struct cbot *bot, config_setting_t *elem, int idx)
+{
+    const char *cc;
+    struct cbot_channel_confg *chan = calloc(1, sizeof(*chan));
+    int rv = config_setting_lookup_string(elem, "name", &cc);
+    if(rv == CONFIG_FALSE)
+    {
+        fprint(strerr, "cbot config : cbot.channels[%d] missing \n"name\" "
+                "field\n", idx);
+        goto err_name;
+    }
+
+    chan->name = strdup(cc);
+    rv = config_setting_lookup_string(elem, "pass", &cc);
+    if(rv == CONFIG_TRUE)
+    {
+        chan->pass = strdup(cc);
+    }
+
+    sc_list_insert_end(&bot->init_channels, &chan->list);
+    return chan;
+err_name:
+    free(chan);
+    return NULL;    
+}
+
 
 
