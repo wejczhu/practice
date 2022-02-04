@@ -144,5 +144,43 @@ err_name:
     return NULL;    
 }
 
+static void free_init_channel(struct cbot_channel_conf *c)
+{
+    free(c->name);
+    if(c->pass)
+    {
+        free(c->pass);
+    }
+
+    free(c);
+}
+
+static void free_init_channels(struct cbot *bot)
+{
+    struct cbot_channel_conf *c, *n;
+    sc_list_for_each_safe(c, n, &bot->init_channels, list , struct cbot_channel_conf)
+    {
+        sc_list_remove(&c->list);
+        free_init_channel(c);
+    }
+}
+
+static int add_channels(struct cbot *bot, config_setting_t *botsec)
+{
+    int rv, i;
+    config_setting_t *chanlist, *elem;
+    chanlist = config_setting_lookup(botset, "channels");
+    if(!chanlist || !config_setting_is_list(chanlist))
+    {
+        fprintf(stderr, "cbot: \"cbot.channels\" section missing or wrong" "type\n");
+        rv = -1;
+        return rv;
+        ;
+    }
+
+    sc_list_init(&bot->init_channels);
+    
+}
+
 
 
