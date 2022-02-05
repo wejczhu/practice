@@ -179,7 +179,41 @@ static int add_channels(struct cbot *bot, config_setting_t *botsec)
     }
 
     sc_list_init(&bot->init_channels);
-    
+    for(i = 0; i < config_setting_length(chanlist); i++)
+    {
+        elem = config_setting_get_elem(chanlist, i);
+        if(!config_setting_is_group(elem))
+        {
+            fprintf(stderr, "cbot: \"cbot.channels[%d]\" is not a group\n", i);
+            goto cleanup_channels;
+        }
+
+        add_init_channels(bot, elem, i);
+    }
+
+    return 0;
+cleanup_channels:
+    free_init_channels(bot);
+    return -1;
+}
+
+int cbot_load_plugins(struct cbot *bot, config_setting_t *group);
+
+static void cbot_run_in_lwt(struct cbot *bot)
+{
+    struct timespec t;
+    bot->backend_ops->run(bot);
+    CL_DEBUG("Sending shutdown signal and waiting...\n");
+    sc_lwt_send_shutdown_signal();
+    t.tv_sec = 5;
+    t._tv_nsec = 0;
+    sc_lwt_settimeout(bot->lwt, &t);
+    sc_lwt_join();
+    if(sc_lwt_task_count() > 1)
+    {
+        CL_CRIT("cbot: BUG: tasks running after join\n");
+        sc_lwt_early_term();
+    }
 }
 
 
