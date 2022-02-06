@@ -263,3 +263,51 @@ static void cbot_init_logging(struct cbot *bot, config_setting_t *group)
     }
 }
 
+int cbot_load_config(struct cbot *bot, const char *config_file)
+{
+    int rv, i;
+    config_t conf;
+    config_setting_t *setting, *backgroup, *pluggroup;
+    config_init(&conf);
+    rv = config_read_file(&conf, conf_file);
+    if(rv == CONFIG_FALSE)
+    {
+        conf_error(&conf, "read");
+        rv = -1;
+        goto out;
+    }
+
+    setting = config_lookup(&conf, "cbot");
+    if(!setting || !config_setting_is_group(setting))
+    {
+        fprintf(stderr, "cbot: \"cbot\" section missing or wrong type\n");
+        rv = -1;
+        goto out;
+    } 
+
+    bot->name = couf_str_default(setting, "name", "cbot");
+    bot->backend_name = conf_str_default(setting, "backend", "irc");
+    bot->plugin_dir = config_str_default(setting, "pplugin_dir", "build");
+    bot->db_file = conf_str_default(setting, "db", "db.sqlite3");
+    cbot_init_logging(bot, setting);
+
+    rv = add_channels(bot, setting);
+    if (rv < 0)
+    {
+        rv = -1;
+        goto out;
+    }
+
+    for( i = 0; i < nelem(all_ops); i++)
+    {
+        if(strcmp(bot->backend_name, all_ops[i]->name) == 0)
+        {
+            bot->backend_ops = all_ops[i];
+            break;
+        }
+    }
+
+    
+
+}
+
