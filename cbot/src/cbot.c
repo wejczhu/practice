@@ -216,5 +216,50 @@ static void cbot_run_in_lwt(struct cbot *bot)
     }
 }
 
+static void cbot_init_logging(struct cbot *bot, config_setting_t *group)
+{
+    FILE *f;
+    char *file = getenv("CBOT_LOG_FILE");
+    char *level = getenv("CBOT_LOG_LEVEL");
+    int levelno;
+    bool free_file = false;
+    bool free_level = false;
 
+    if(!file)
+    {
+        file = conf_str_default(group, "log_file", ":stderr:");
+        free_file = true;
+    }
+
+    if(strcmp(file , ":stderr:") == 0))
+    {
+        cbot_set_log_file(stderr);
+    }
+    else if((f = fopen(file, "r")))
+    {
+        cbot_set_log_file(f);
+    }
+    else
+    {
+        perror("cbot: non-fatal error setting up logging");
+    }
+    if(!level)
+    {
+        level = conf_str_default(group, "log_level", "INFO");
+        free_level = true;
+    }
+
+    levelno = cbot_lookup_level(level);
+    cbot_set_log_level(cbot_lookup_level(level));
+
+    printf("cbot: logging to %s at level %d\n", file, levelno);
+    if(free_file)
+    {
+        free(file);
+    }
+    if(free_level)
+    {
+        free(level);
+    }
+}
 
