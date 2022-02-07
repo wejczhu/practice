@@ -307,7 +307,54 @@ int cbot_load_config(struct cbot *bot, const char *config_file)
         }
     }
 
-    
+    if(!bot->backend_ops)
+    {
+        CL_CRIT("cbot: backend \"%s\" not found\n", bot->backend_name);
+        rv = -1;
+        goto out;
+    }
 
+    backgroup = config_lookup(&conf, bot->backend_name);
+    if(!backgroup || !config_setting_is_group(backgroup))
+    {
+        CL_CRIT("cbot: \"%s\" section missing or wrong type\n", bot->backend_name);
+        rv = -1;
+        goto out;
+    }
+    rv = bot->backend_ops->configure(bot, backgroup);
+    if(rv < 0)
+    {
+        goto out;
+    }
+
+    bot->lwt_ctx = sc_lwt_init();
+    bot->lwt = sc_lwt_create_task(bot->lwt_ctx, (void (*) (void*))cbot_run_in_lwt, bot);
+
+    rv = cbot_curl_init(bot);
+    if(rv < 0)
+    {
+        rv = -1;
+        goto out;
+    }
+
+    pluggroup = config_lookup(&conf, "plugins");
+    if(!pluggroup || !config_setting_is_group(pluggroup))
+    {
+        CL_CRIT("cbot: \"plugins\" section missing or wrong type\n");
+        rv = -1;
+        goto out;
+    }
+
+    rv = cbot_load_plugins(bot, pluggroup);
+
+out:
+    config_destory(&conf);
+    return rv;
+}
+
+void cbot_run(struct cbot *bot)
+{
+    sc_lwt_run(bot->lwt_ctx);
+    CL_DEBUG("exiting run() loop, goodbye!");
 }
 
