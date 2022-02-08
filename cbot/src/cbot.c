@@ -358,3 +358,33 @@ void cbot_run(struct cbot *bot)
     CL_DEBUG("exiting run() loop, goodbye!");
 }
 
+void cbot_set_nick(struct cbot *bot, const char *newname)
+{
+    struct cbot_nick_event event, copy;
+    struct cbot_handler *hdlr, *next;
+
+    event.bot = bot;
+    event.old_username = bot->name;
+    bot->name = strdup(newname);
+    event.new_username = bot->name;
+    envet.type = CBOT_BOT_NAME;
+
+    if(strcmp(event.old_username, event.new_username) != 0)
+    {
+        sc_list_for_each_safe(hdlr, next, &bot->handlers[event.type],
+                             handler_list, struct cbot_handler)
+                             {
+                                 copy = event;
+                                 copy.plugin = &hdlr->plugin->p
+                                 hdrl->handler((struct cbot_event *)&copy, hdrl->user);
+                             }
+    }
+
+    free((char*)event.old_username);
+}
+
+const char *cbot_get_name(struct cbot *bot)
+{
+    return bot->name;
+}
+
