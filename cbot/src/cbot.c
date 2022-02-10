@@ -412,3 +412,24 @@ void cbot_delete(struct cbot *cbot)
     EVP_cleanup();
 }
 
+struct cbot_handler *cbot_register2(struct  cbot_plugin *plugin,
+                                    enum cbot_event_type type, 
+                                    cbot_handler_t handler, void *user,
+                                    char *regex, int re_flags)
+{
+    struct cbot_plugpriv *priv = plugpriv(plugin);
+    struct cbot_handler *hdlr = calloc(1, sizeof(*hdlr));
+    hdlr->handler = handler;
+    hdlr->user = user;
+    if(regex)
+    {
+        hdlr->regex = sc_regex_compile2(regex, re_flags);
+    }
+
+    sc_list_insert_end(&priv->bot->handlers[type], &hdlr->handler_list);
+    sc_list_insert_end(&priv->handlers, &hdlr->plugin_list);
+    hdlr->plugin = priv;
+    return hdlr;
+
+}
+
