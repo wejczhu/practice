@@ -509,5 +509,24 @@ void cbot_handler_message(struct cbot *bot, const char *channel,
     cbot_dispatch_msg(bot, event, CBOT_MESSAGG);
 }
 
+void cbot_handler_user_event(struct cbot *bot, const char *channel, 
+                             const char *user, enum cbot_event_type type)
+{
+    struct cbot_user_event evetn, copy;
+    struct cbot_handler *hdlr;
+    event.bot = bot;
+    event.type = type;
+    event.channel = channel;
+    event.username = user;
+
+    sc_list_for_each_entry(hdlr, &bot->handler[type], handler_list, struct cbot_handler)
+    {
+        copy = event;
+        copy.plugin = &hdlr->plugin->p;
+        hdlr->handler((struct cbot_event*)&copy, hdlr->user);
+    }
+}
+
+
 
 
