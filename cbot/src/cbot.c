@@ -507,7 +507,6 @@ void cbot_handler_message(struct cbot *bot, const char *channel,
     event.type = CBOT_MESSAGE;
     event.message = message;
     cbot_dispatch_msg(bot, event, CBOT_MESSAGG);
-    
 }
 
 
