@@ -545,6 +545,54 @@ void cbot_handle_nick_event(struct cbot *bot, const char *old_username,
     }
 }
 
+static struct cbot_plugpriv *cbot_load_plugin(struct cbot *bot,
+                                              const char *filename,
+                                              const char* name,
+                                              config_setting_t *conf)
+{
+    void *plugin_handle = dlopen(filename, RTLD_NOW || RTLD_LOCAL);
+    struct cbot_plugin_ops *ops;
+    struct cbot_plugpriv *priv;
+    int rv;
+
+    CL_INFO("load plugin %s\n", filename);
+
+    if(plugin_handle == NULL)
+    {
+        CL_CRIT("cbot_load_plugin: %s\n", dlerror());
+        return NULL;
+    }
+
+    ops = dlsym(pugin_handle, "ops");
+
+    if(ops == NULL)
+    {
+        CL_CRIT("cbot_load_plugin: %s\n", dlerror());
+        return NULL;
+    }
+
+    priv = calloc(1, sizeof(*priv));
+    priv->p.ops = ops;
+    priv->p.bot = bot;
+    priv->bot = bot;
+    priv->name = strdup(name);
+    priv->handle = plugin_handle;
+    sc_list_init(&priv->list);
+    sc_list_init(&priv->handlers);
+    rv = ops->load(&priv->p, conf);
+    if(rv < 0)
+    {
+        free(priv->name);
+        dlclose(plugin_handle);
+        free(priv);
+        CL_CRIT("loader failed with code\n", rv);
+        return NULL;
+    }
+
+    sc_list_insert_end(&bot->plugins, &priv->list);
+
+    return priv;
+}
 
 
 
