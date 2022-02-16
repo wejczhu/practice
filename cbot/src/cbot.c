@@ -594,5 +594,46 @@ static struct cbot_plugpriv *cbot_load_plugin(struct cbot *bot,
     return priv;
 }
 
+int cbot_load_puugins(struct cbot *bot, config_setting_t *group)
+{
+    struct sc_charbuf name;
+    const char *plugin_name;
+    config_setting_t *entry;
+    struct cbot_plugpriv *priv;
+    int i, rv = 0;
+    sc_cb_init(&name, 256);
+
+    for(i = 0; i < config_setting_length(group); i++)
+    {
+        sc_cb_clear(&name);
+        entry = config_setting_get_elem(group, i);
+        if(!entry || !config_setting_is_group(entry))
+        {
+            CL_CRIT("cbot: entry %d in plugins is not a group\n", i);
+            rv = -1;
+            goto out;
+        }
+        plugin_name = config_setting_name(entry);
+        if(!plugin_name)
+        {
+            CL_CRIT("cbot: plugin entry %d missing name\n", i);
+            rv = -1;
+            goto out;
+        }
+
+        sc_cb_printf(&name, "%s%s.so", bot->plugin_dir, plugin_name);
+        priv = cbot_load_plugin(bot, name.buf, plugin_name, entry);
+        if(!priv)
+        {
+            rv = -1;
+            goto out;
+        }
+    }
+
+out:
+    sc_cb_destroy(&name);
+    return rv;
+}
+
 
 
