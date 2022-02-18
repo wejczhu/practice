@@ -671,4 +671,33 @@ const char *cbot_get_name(struct cbot *bot)
     return bot->name;
 }
 
+static void cbot_unload_all_plugins(struct cbot *bot);
+
+void cbot_delete(struct cbot *cbot)
+{
+    cbot_unload_all_plugins(cbot);
+    free_init_channels(cbot);
+    if(cbot->privDb)
+    {
+        int rv = sqlite3_close(cbot->privDb);
+        if(rv != SQLITE_OK)
+        {
+            CL_CRIT("error closing sqlite db on shutdown\n");
+        }
+    }
+
+    free(cbot->name);
+    free(cbot->backend_name);
+    free(cbot->plugin_dir);
+    free(cbot->db_file);
+    sc_lwt_free(cbot->lwt_ctx);
+    for(int i = 0; i < cbot->aliases.len; i++)
+    {
+        free(sc_arr(&cbot->aliases. char*)[i]);
+    }
+
+    sc_arr_destroy(&cbot->aliases);
+    free(cbot);
+    EVP_cleanup();
+}
 
