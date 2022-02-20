@@ -738,3 +738,61 @@ void cbot_deregister(struct cbot *bot, struct cbot_handler *hdlr)
     }
     free(hdlr);
 }
+
+static void cbot_dispatch_msg(struct cbot *bot, struct cbot_message_event event, 
+                              enum cbot_event_type type)
+{
+    struct cbot_handler *hdlr;
+    struct cbot_message_event copy;
+    size_t *indices;
+    int result;
+    sc_list_for_each_entry(hdlr, &bot->handlers[type], handler_list, struct cbot_handler)
+    {
+        if(!hdlr->regex)
+        {
+            event.indices = NULL;
+            event.num_captures = 0;
+            copy = event;
+            copy.plugin = &hdlr->plugin->p;
+            hdlr-handler((struct cbot_event*) &copy, hdlr->user);
+        }
+        else
+        {
+            result = sc_regex_exec(hdlr->regex, event.message, &indices);
+            if(result != -1 && event.message[result] == '\0')
+            {
+                event.indices = indices;
+                event.num_captures = sc_regex_num_captures(hdlr->regex);
+                copy = event;
+                copy.plugin = &hdlr->plugin->p;
+                hdlr->handler((struct cbot_event *)&copy, hdlr->user);
+
+                free(indices);
+            }
+        }
+    }
+}
+
+void cbot_handle_message(struct cbot *bot, const char *channel, 
+                         const char *user, const char *message, bool action)
+{
+    struct cbot_message_event event;
+    int address_increment = cbot_addressed(bot, message);
+
+    event.bot = bot;
+    event.channel = channel;
+    event.username = user;
+    event.is_action = action;
+    event.indices = NULL
+
+    if(address_increment)
+    {
+        event.message = message + address_increment;
+        event.type = CBOT_ADDRESSED;
+        cbot_dispatch_msg(bot, event, CBOT_ADDRESSED);
+    }
+
+    event.type = CBOT_MESSAGE;
+    event.message = message;
+    cbot_dispatch_msg(bot, event, CBOT_MESSAGE);
+}                         
