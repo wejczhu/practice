@@ -795,4 +795,42 @@ void cbot_handle_message(struct cbot *bot, const char *channel,
     event.type = CBOT_MESSAGE;
     event.message = message;
     cbot_dispatch_msg(bot, event, CBOT_MESSAGE);
-}                         
+} 
+
+void cbot_handle_user_event(struct cbot *bot, const char *channel,
+                            const char *user, const char *message, bool action)
+{
+    struct cbot_user_event event, copy;
+    struct cbot_handler *hdlr;
+    event.bot = bot;
+    event.type = type;
+    event.channel = channel;
+    event.username = user;
+
+    sc_list_for_each_entry(hdlr, &bot->handlers[type], handler_list, 
+                           struct cbot_handler)
+    {
+        copy = event;
+        copy.plugin = &hdlr->plugin->p;
+        hdlr->handler((struct cbot_event*)&copy, hdlr->user);
+    }   
+}
+
+void cbot_handler_nick_event(struct cbot *bot, const char *old_username,
+                             const char *new_username)
+{
+    struct cbot_nick_event event, copy;
+    struct cbot_handler *hdlr;
+    event.bot = bot;
+    event.type = CBOT_NICK;
+    event.old_username = old_username;
+    event.new_username = new_username;
+
+    sc_list_for_each_entry(hdlr, &bot->handlers[CBOT_NICK], handler_list,
+                           struct cbot_handler)
+    {
+        copy = event;
+        copy.plugin = &hdlr->plugin->p;
+        hdlr->handler((struct cbot_event*) &copy, hdlr->user);
+    }
+}                             
