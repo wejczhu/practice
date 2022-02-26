@@ -37,4 +37,31 @@ static void cbot_cli_join(const struct cbot *bot, const char* channel,
 {
     (void)bot;
     printf("[%s~CMD]%s: /join %s\n", channel, bot->name, channel);
-}                          
+}
+
+static void cbot_cli_nick(const struct cbot *bot, const char *newnick)
+{
+    (void)bot;
+    printf("%s bercomes %s\n", bot->name, newnick);
+    cbot_set_nick(struct cbot *)bot, newnick);
+}
+
+static void cbot_cli_cmd_help(struct  cbot *bot, int argc, char** argv);
+
+
+struct cbot_cli_cmd
+{
+    char *cmd;
+    int cmdlen;
+    void(*func) (struct cbot*, int, char**);
+    char *help;
+};
+
+#define CMD(cmd, func, help)
+        {
+            cmd, sizeof(cmd) -1, func, help) 
+        }
+const struct cbot_cli_cmd cmds[] = 
+{
+    
+}
