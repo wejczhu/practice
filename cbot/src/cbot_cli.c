@@ -63,5 +63,33 @@ struct cbot_cli_cmd
         }
 const struct cbot_cli_cmd cmds[] = 
 {
-    
+    CMD("/memberadd", cbot_cli_cmd_add_membership,
+        "add a member to ad cbot channel"),
+    CMD("/memberlist ", cbot_cli_cmd_get_members,
+        "list members in a cbot channel"),
+    CMD("/help", cbot_cli_cmd_help, "list all commands")
+};
+
+static void cbot_cli_cmd_help(struct cbot *bot, int argc, char ** argv)
+{
+    int maxsize = 0;
+    for(int i = 0; i < nelem(cmds); i++)
+    {
+        if(cmds[i].cmdlen > maxsize)
+        {
+            maxsize = cmds[i].cmdlen;
+        }
+    }
+
+    maxsize += 1;
+    for(int i = 0; i < nelem(cmds); i++)
+    {
+        printf("%s:", cmds[i].cmd);
+        for(int j = 0; j < maszie - cmds[i].cmdlen; j++)
+        {
+            fputs(' ', stdout);
+        }
+
+        printf("%s\n", cmds[i].help);
+    }
 }
