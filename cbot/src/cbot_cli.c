@@ -93,3 +93,49 @@ static void cbot_cli_cmd_help(struct cbot *bot, int argc, char ** argv)
         printf("%s\n", cmds[i].help);
     }
 }
+
+#define CBOT_CLI_TOK_BUFSIZE 64
+#define CBOT_CLI_TOK_DELIM "\t\r\n\a"
+
+char **cbot_cli_split_line(char *line, int *count)
+{
+    int bufsize = CBOT_CLI_TOK_BUFSIZE, position ;
+    char **tokens = malloc(bufsize * sizeof(char*));
+    char *token, **tokens_backup, *save;
+
+    if(!tokens)
+    {
+        fprintf(stderr, "cli: allocation error\n");
+        exit(EXIT_FAILURE);
+    }
+
+    token = strtok_r(line, CBOT_CLI_TOK_DELIM, &save);
+    while(token != NULL)
+    {
+        tokens[position] = token;
+        position++;
+
+        if(position >= bufsize)
+        {
+            bufsize += CBOT_CLI_TOK_BUFSIZE;
+            tokens_backup = tokens;
+            tokens = realloc(tokens, bufsize * sizeof(char *));
+            if(!tokens)
+            {
+                free(tokens_backup);
+                fprintf(stderr, "cli: allocation error\n");
+                exit(EXIT_FAILURE);
+            }
+        }
+
+        token = strtok_r(NULL, CBOT_CLI_TOK_DELIM, &save);
+    }
+
+    tokens[position] = NULL;
+    if(count)
+    {
+        *count = posotion;
+    }
+
+    return tokens;
+}
