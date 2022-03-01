@@ -139,3 +139,63 @@ char **cbot_cli_split_line(char *line, int *count)
 
     return tokens;
 }
+
+bool cbot_cli_execute_cmd(struct cbot *bot, char *line)
+{
+    int i, argc;
+    char **argv;
+    for(i = 0; i < nelem(cmds); i++)
+    {
+        if(strncmp(cmds[i].cmd, line, cmds[i].cmdlen) == 0)
+        {
+            argv = cbot_cli_split_line(line, &argc);
+            cmds[i].func(bot, argc, argv);
+            free(argv);
+            return true;
+        }
+    }
+
+    return false;
+}
+
+static void cbot_cli_run(struct cbot *bot)
+{
+    char *line = NULL;
+    size_t n;
+    int newline, rv;
+    struct sc_lwt *cur = sc_lwt_current();
+
+    while(true)
+    {
+        printf("> ");
+        fflush(stdout);
+        sc_lwt_wait_fd(cur, STDIN_FILENO, SC_LWT_W_IN, NULL);
+        sc_lwt_set_state(cur, SC_LWT_BLOCKED);
+        sc_lwt_yield();
+        sc_lwt_remove_fd(cur, STDIN_FILENO);
+        rv = getline(&line, &n, stdin);
+        if(rv < 0 && feof(stdin))
+        {
+            break;
+        }
+        else if(rv < 0)
+        {
+            perror("getline");
+            break;
+        }
+
+        newline = strlen(line);
+        if(newline > 0 && line[newline - 1] == '\n')
+        {
+            line[newline - 1] = '\0';
+        }
+        if(line[0] == '/' && cbot_lie_execute_cmd(bot, line)
+        {
+            continue;
+        }
+
+        cbot_handle_meesage(bot , "stdin", "shell", line, false, false);
+    }
+
+    free(line);
+}
