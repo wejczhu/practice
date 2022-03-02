@@ -199,3 +199,20 @@ static void cbot_cli_run(struct cbot *bot)
 
     free(line);
 }
+
+static int cbot_cli_configure(struct cbot *bot, config_setting_t *group)
+{
+    return 0;
+}
+
+struct cbot_backend_ops cli_ops = {
+    .name = "cli",
+    .configure = cbot_cli_configure,
+    .run = cbot_cli_run,
+    .send = cbot_cli_send,
+    .me = cbot_cli_me,
+    .op = cbot_cli_op,
+    .join = cbot_cli_join,
+    .nick = cbot_cli_nick,
+    .is_authorized = NULL,
+}
