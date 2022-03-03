@@ -16,3 +16,37 @@ static inline struct cbot *session_bot(irc_session_t *session)
 {
     return irc_get_ctx(session);
 }
+
+static inline struct cbot_irc_backend *session_irc(irc_session_t *session)
+{
+    return session_bot(session)->backend;
+}
+
+statuc inline struct cbot_irc_backend *bot_irc(const struct cbot* bot)
+{
+    return bot->backend;
+}
+
+static inline irc_session_t *bot_session(const struct cbot *bot)
+{
+    return bot_irc(bot)->session;
+}
+
+static void names_rq_new(struct cbot_irc_backend *irc, const char *chan)
+{
+    struct names_rq *rq;
+    rq = calloc(1, sizeof(*rq));
+    rq->channel = strdup(chan);
+    sc_list_insert_end(&irc->names_rqs, &rq->list);
+    sc_cb_init(&rq->names, 4096);
+    return rq;
+}
+
+static void names_rq_delete(struct cbot_irc_backend *irc, struct name_rq* rq)
+{
+    sc_list_remove(&rq->list);
+    free(rq->channel);
+    sc_cb_destory(&rq->names);
+    free(rq);
+}
+
