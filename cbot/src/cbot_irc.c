@@ -50,3 +50,38 @@ static void names_rq_delete(struct cbot_irc_backend *irc, struct name_rq* rq)
     free(rq);
 }
 
+void *lookup_by_str(struct sc_list_head *list, const char *str)
+{
+    struct sc_list_head *node;
+    char **after;
+
+    sc_list_for_each(node, list)
+    {
+        after = (char**)&node[1];
+        if(strcmp(*after, str)== 0)
+        {
+            return node;
+        }
+    }
+
+    return NULL;
+}
+
+void log_event(irc_session_t *session, const char *event, const char *origin,
+               const char **params, unsigned int count)
+{
+    size_t i;
+    printf("Event \"%s\", origin: \"%s\", params: %d [", event, origin, count);
+    for(i = 0; i < count; i++)
+    {
+        if(i != 0)
+        {
+            fputc('|', stdout);
+        }
+
+        printf("%s", params[i]);
+    }
+
+    printf("]\n");
+}               
+
