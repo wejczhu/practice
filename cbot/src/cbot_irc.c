@@ -83,5 +83,37 @@ void log_event(irc_session_t *session, const char *event, const char *origin,
     }
 
     printf("]\n");
-}               
+}
+
+static void add_all_names(struct cbot *bot, struct names_rq *rq)
+{
+    char *nick = strtok(rq->name.buf, " ");
+    do
+    {
+        if(nick[0] == '~' || nick[0] == '&' || nick[0] == '+' ||
+           nick[0] == '%')
+        {
+            nick++;
+        }
+
+        cbot_add_membership(bot, nick, rq->channel);
+
+    } while ((nick = strtok(NULL, " ")) != NULL);
+}
+
+static void event_rpl_namereply(irc_session_t *session, const char *origin
+                                const char **params, unsigned int count)
+{
+    struct cbot_irc_backend *irc = session_irc(session);
+    struct names_rq *rq = lookup_by_str(&irc->names_rqs, params[2]);
+    if(!rq)
+    {
+        fprintf(stderr, "ERR: unsolicited RPL_NAMREPLY for %s\n", params[2]);
+        return;
+    }
+
+    cbot_clear_channel_memberships(bot, rq->channel);
+    add_all_names(bot, rq);
+    names_rq_delete(irc, rq);
+}                                
 
