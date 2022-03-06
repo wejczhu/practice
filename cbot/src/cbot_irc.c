@@ -115,5 +115,22 @@ static void event_rpl_namereply(irc_session_t *session, const char *origin
     cbot_clear_channel_memberships(bot, rq->channel);
     add_all_names(bot, rq);
     names_rq_delete(irc, rq);
-}                                
+}      
+
+void event_rpl_endofnames(irc_session_t *session, const char *origin,
+                          const char **params, unsigned int count)
+{
+    struct cbot_irc_backend *irc = session_irc(session);
+    struct cbot *bot = session_bot(session);
+    struct names_rq *rq = lookup_by_str(*irc->names_rqs,params[1]);
+    if(!rq)
+    {
+        fprintf(stderr, "ERR: unsolicited RPL_ENDOFNAMES for %s\n", params[1]);
+        return;
+    }
+
+    cbot_clear_channel_memberships(bot, rq->channel);
+    add_all_names(bot, rq);
+    names_rq_delete(irc, rq);
+}                          
 
