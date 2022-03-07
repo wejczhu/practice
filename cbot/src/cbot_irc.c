@@ -134,3 +134,11 @@ void event_rpl_endofnames(irc_session_t *session, const char *origin,
     names_rq_delete(irc, rq);
 }                          
 
+void event_rpl_topic(irc_session_t *session, unsigned int event,
+                     const char *origin, const char **params, unsigned int count)
+{
+    struct cbot *bot = session_bot(session);
+    cbot_set_channel_topic(bot, (char*) params[1], (char*)params[2]);
+}                     
+
+
