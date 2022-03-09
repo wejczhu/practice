@@ -139,6 +139,44 @@ void event_rpl_topic(irc_session_t *session, unsigned int event,
 {
     struct cbot *bot = session_bot(session);
     cbot_set_channel_topic(bot, (char*) params[1], (char*)params[2]);
-}                     
+}
+
+void event_numeric(irc_session_t *session, unsigned int event,
+                   const char *origin, const char **params, unsigned int count)
+{
+    char buf[24];
+    sprintf(buf, "%d", event);
+    switch(event)
+    {
+        case 332:
+            event_rpl_topic(session, origin, params, count);
+            break;
+
+        case 353:
+            event_rpl_namreply(session, origin, params, count);
+            break;
+
+        case 366:
+            event_rpl_endofnames(session, origin, params, count);
+            break;
+    }
+    log_event(session, buf, origin ,params, cout);
+}
+
+void event_connect(irc_session_t *session, const char *event, 
+                   const char *origin, const char **params, unsigned int count)
+{
+    struct cbot *bot = session_bot(session);
+    struct cbot_channel_conf *c;
+    sc_list_for_each_entry(c, &bot->init_channel s, list,
+                            struct cbot_channel_conf)
+    {
+        cbot_join(bot, c->name, c->pass);
+        irc_cmd_join(session, c->name, c->pass);
+    }                            
+
+    log_event(session, event, origin, params, count);
+}
+
 
 
