@@ -178,5 +178,10 @@ void event_connect(irc_session_t *session, const char *event,
     log_event(session, event, origin, params, count);
 }
 
-
-
+static inline void maybe_schedule(const struct cbot *bot)
+{
+    if(sc_lwt_current() != bot->lwt)
+    {
+        sc_lwt_set_state(bot->lwt, SC_LWT_RUNNABLE);
+    }
+}
