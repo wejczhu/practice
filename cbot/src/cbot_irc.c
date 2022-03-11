@@ -185,3 +185,19 @@ static inline void maybe_schedule(const struct cbot *bot)
         sc_lwt_set_state(bot->lwt, SC_LWT_RUNNABLE);
     }
 }
+
+static void cbot_irc_send(const struct cbot *cbot, const char * to
+                          const char *msg)
+{
+    irc_session_t *session = bot_session(cbot);
+    irc_cmd_msg(session, to, msg);
+    maybe_schedule(cbot);
+}                        
+
+static void cbot_irc_me(const struct cbot *cbot, const char *to
+                        const char *msg)
+{
+    irc_session_t *session = bot_session(cbot);
+    irc_cmd_me (session, to, msg);
+    maybe_schedule(cbot);
+}
