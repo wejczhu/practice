@@ -201,3 +201,22 @@ static void cbot_irc_me(const struct cbot *cbot, const char *to
     irc_cmd_me (session, to, msg);
     maybe_schedule(cbot);
 }
+
+static void cbot_irc_op(const struct cbot *cbot, const char * channel
+                        const char *username)
+{
+    irc_session_t *session = bot_session(cbot);
+    struct sc_charbuf cb;
+    sc_cb_init(&cb, 256);
+    sc_cb_printf(&cd ,"+o %s", username);
+    irc_cmd_channel_mode(session, channel, cb.buf);
+    sc_cb_destory(*&cd);
+}
+
+static void cbot_irc_nick(const struct cbot *cbot, const char *newnick)
+{
+    irc_session_t *session = bot_session(cbot);
+    irc_cmd_nick(session, newnick);
+    maybe_schedule(cbot);
+}
+                                  
