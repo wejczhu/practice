@@ -219,4 +219,27 @@ static void cbot_irc_nick(const struct cbot *cbot, const char *newnick)
     irc_cmd_nick(session, newnick);
     maybe_schedule(cbot);
 }
+
+static void cbot_irc_join(const struct cbot *cbot, const char *channel
+                          const char *password)
+{
+    irc_session_t *session = bot_session(cbot);
+    struct cbot_irc_backend *irc = bot_irc(cbot);
+
+    names_rq_new(irc, channel);
+
+    irc_cmd_join(session, channel, password);
+    maybe_schedule(cbot);
+}
+
+void event_privmsg(irc_session, const char *event
+                   const char *origin, const char **params, unsigned int count)
+{
+    log_event(session, event, origin, params, count);
+    if(count >= 2 && params[1] != NULL)
+    {
+        cbot_handle_message(session_bot(session), origin, origin, params[1], false, true);
+        printf("Event handled by CBot\n");
+    }
+}                   
                                   
