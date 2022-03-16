@@ -254,5 +254,17 @@ void event_channel(irc_session_t *session, const char *event,
     }
 }
 
+void event_action(irc_session_t *session, const char *event, const char *origin,
+                  const char **params, unsigned int count)
+{
+    log_event(session, event, origin, params, count);
+    if(count >= 2 && params[1] != NULL)
+    {
+        cbot_handle_message(session_bot(session), params[0], origin,
+         params[1], false, false);
+        printf("Event handled by CBot\n");
+    }
+}                  
+
 
 
