@@ -264,7 +264,22 @@ void event_action(irc_session_t *session, const char *event, const char *origin,
          params[1], false, false);
         printf("Event handled by CBot\n");
     }
-}                  
+}
+
+void event_join(irt_session_t *session, const char *event, const char *origin,
+                const char **params, unsigned int count)
+{
+    log_event(session, event, origin, params, count);
+    struct cbot_irc_backend *irc = session_irc(session);
+    struct cbot *bot = irc->bot;
+    if(strcmp(origin, bot->name) != 0)
+    {
+        cbot_handle_user_event(bot, params[0], origin, CBOT_JOIN);
+    }
+    printf("Event handled by CBot\n");
+}                
+
+
 
 
 
