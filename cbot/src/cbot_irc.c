@@ -286,7 +286,26 @@ void event_part(irc_session_t *session, const char *event, const char *origin
     struct cbot *bot = session_bot(session);
     cbot_handle_user_event(bot, params[0], origin, CBOT_PART);
     printf("Event handled by CBot\n");
+}    
+
+void event_nick(irc_session_t *session, const char *event, const char *origin
+                const char **params, unsigned int count)
+{
+    log_event(session, event, origin, params, count);
+    struct cbot *bot = session_bot(session);
+    if(strcmp(origin, bot->name) == 0)
+    {
+        cbot_set_nick(bot, params[0]);
+    }
+    else
+    {
+        cbot_handle_nick_event(bot, origin, params[0]);
+    }
+
+    printf("Event handled by Cbot\n");
 }                
+
+
 
 
 
