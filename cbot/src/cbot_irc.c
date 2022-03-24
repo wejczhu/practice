@@ -305,7 +305,29 @@ void event_nick(irc_session_t *session, const char *event, const char *origin
     printf("Event handled by Cbot\n");
 }                
 
+static void cbot_irc_run(struct cbot *bot)
+{
+    irc_session_t *session = bot_sessiont(bot);
+    struct cbot_irc_backend *irc = bot_irc(bot);
+    fd_set in_fd, out_fd, err_fd;
+    int maxfd, rv;
+    struct sc_lwt *cur = sc_lwt_current();
 
+    if(irc_connect(session, irc->host, irc->port, irc->password, bot->name
+                   bot->name, NULL))
+    {
+        fprintf(stderr, "cbot: error connecting to IRC - %s\n",
+                irc_strerror(irc_errno(session)));
+                exit(EXIT_FAILURE);
+    }
+
+    while(1)
+    {
+        sc_lwt_fdgen_advance(cur);
+        sc_lwt_clear_fds(&in_fd, &out_fd, &err_fd);
+    }
+    
+}
 
 
 
