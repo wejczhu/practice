@@ -325,6 +325,30 @@ static void cbot_irc_run(struct cbot *bot)
     {
         sc_lwt_fdgen_advance(cur);
         sc_lwt_clear_fds(&in_fd, &out_fd, &err_fd);
+
+        maxfd = 0;
+        rv = irc_add_select_descriptors(session, &in_fd, &out_fd, &max_fd);
+
+        if(rv != 0)
+        {
+            fprintf(stderr, "cbot_irc: irc error: %s\n", irc_strerror(irc_errno(session)));
+            break;
+        }
+
+        sc_lwt_add_select_fds(cur, &in_fd, &out_fd, &err_fd, maxfd, NULL);
+        sc_lwt_fdgen_purge(cur);
+
+        sc_lwt_set_state(cur, SC_LWT_BLOCKED);
+        sc_lwt_yield();
+        sc_lwt_clear_fds(&in_fd, &out_fd, &err_fd);
+        sc_lwt_populate_ready_fds(cur, &in_fd, &out_fd, &err_fd, maxfd);
+        rv = irc_process_select_descriptors(session, &in_fd, &out_fd);
+
+        if(rv != 0)
+        {
+            fprintf(stderr, "cbot_irc: irc error :%s\n", irc_strerror(irc_errno(session)));
+            break;
+        }
     }
     
 }
