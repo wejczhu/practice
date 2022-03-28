@@ -353,7 +353,29 @@ static void cbot_irc_run(struct cbot *bot)
     
 }
 
+static int cbot_irc_configure(struct cbot *bot, config_setting_t *group)
+{
+    int rv;
+    const char* host, *password;
+    int port;
+    struct cbot_irc_backend *backend;
 
+    rv = config_settting_lookup_string(group, "host", &host);
+    if(rv == CONFIG_FALSE)
+    {
+        fprintf(stderr, "cbot irc: key \"host\" wrong type or not exist\n");
+
+        return -1;
+    }
+
+    rv = config_setting_lookup(group, "port", &port);
+    if(rv == CONFIG_FALSE)
+    {
+        fprintf(stderr, "cbot irc: key \"port\" wrong type or not exist\n");
+
+        return -1;
+    }
+}
 
 
 
