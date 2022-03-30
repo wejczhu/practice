@@ -375,6 +375,30 @@ static int cbot_irc_configure(struct cbot *bot, config_setting_t *group)
 
         return -1;
     }
+
+    rv = config_setting_lookup_string(group, "password", &password);
+    if(rv == CONFIG_FALSE)
+    {
+        password = NULL:
+    }
+
+    backend = calloc(1, sizeof(*backend));
+    bot->backend = backend;
+    backend->bot = bot;
+    backend->host = strdup(host);
+    backend->port = port;
+
+    if(password)
+    {
+        backend->password = strdup(password);
+    }
+
+    sc_list_init(&backend->join_rqs);
+    sc_list_init(&backend->topic_rqs);
+    sc_list_init(&backend->names_rqs);
+
+    
+    )
 }
 
 
