@@ -397,6 +397,22 @@ static int cbot_irc_configure(struct cbot *bot, config_setting_t *group)
     sc_list_init(&backend->topic_rqs);
     sc_list_init(&backend->names_rqs);
 
+    backend->callbacks.event_connnect = event_connect;
+    backend->callbacks.event_join = event_join;
+    backend->callbacks.event_nick = event_nick;
+    backend->callbacks.event_quit = log_event;
+    backend->callbacks.event_part = event_part;
+    backend->callbacks.event_mode = log_event;
+    backend->callbacks.event_topic = log_event;
+    backend->callbacks.event_kick = log_event;
+    backend->callbacks.event_channel = event_channel;
+    backend->callbacks.event_privmsg = event_privmsg;
+    backend->callbacks.event_notice = log_event;
+    backend->callbacks.event_invite = log_event;
+    backend->callbacks.event_umode = log_event;
+    backend->callbacks.event_ctcp_rep = log_event;
+    backend->callbacks.event_ctcp_action = log_event;
+    backend->callbacks.event_numeric = event_numeric;
     
     )
 }
