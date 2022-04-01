@@ -413,8 +413,21 @@ static int cbot_irc_configure(struct cbot *bot, config_setting_t *group)
     backend->callbacks.event_ctcp_rep = log_event;
     backend->callbacks.event_ctcp_action = log_event;
     backend->callbacks.event_numeric = event_numeric;
+
+    backend->session = irc_create_session(&backend->callbacks);
+    if(!backend->session)
+    {
+        fprintf(stderr, "cbot: error creating IRC session - %s\n", 
+                irc_strerror(irc_errno(backend->session)));
+
+        return -1;
+    }
     
-    )
+    irc_option_set(backend->session, LIBIRC_OPTION_STRIPNICKS);
+    irc_option_set(backend->session, LIBIRC_OPTION_SSL_NO_VERITY);
+    irc_set_ctx(backend->session, bot);
+
+    return 0;
 }
 
 
