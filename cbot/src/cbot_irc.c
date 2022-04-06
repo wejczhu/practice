@@ -430,6 +430,19 @@ static int cbot_irc_configure(struct cbot *bot, config_setting_t *group)
     return 0;
 }
 
+struct cbot_backend_ops irc_ops = 
+{
+    .name = "irc",
+    .configure = cbot_irc_configure,
+    .run = cbot_irc_run,
+    .send = cbot_irc_send,
+    .me = cbot_irc_me,
+    .op = cbot_irc_op,
+    .join = cbot_irc_join,
+    .nick = cbot_irc_nick,
+    .is_authorized = NULL,
+}
+
 
 
 
