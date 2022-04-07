@@ -443,6 +443,3 @@ struct cbot_backend_ops irc_ops =
     .is_authorized = NULL,
 }
 
-
-
-
