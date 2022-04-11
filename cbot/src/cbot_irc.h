@@ -15,7 +15,18 @@ struct names_rq
     struct sc_charbuf names;
 }
 
-
-
+struct cbot_irc_backend
+{
+    irc_sesssion_t *session;
+    irc_callbacks_t callbacks;
+    struct cbot *bot;
+    bool connected;
+    struct sc_list_head join_rqs;
+    struct sc_list_head topic_rqs;
+    struct sc_list_head names_rqs;
+    char *host;
+    int port;
+    char *password;
+};
 
 #endif
