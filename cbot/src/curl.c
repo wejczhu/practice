@@ -69,7 +69,44 @@ void cbot_curl_run(void *data)
         sc_lwt_clear_fds(&in_fd, &err_fd);
         maxfd = 0;
         curl_multi_fdset(bot->curlm, &in_fd, &out_fd, &err_fd, &maxfd);
-        
+        sc_lwt_add_select_fds(cur, &in_fd, &out_fd, NULL);
+        sc_lwt_fdgen_purge(cur);
+
+
+        block = true;
+        millis = 0;
+        curl_multi_timeout(bot->curlm, &millis);
+        sc_lwt_cleartimeout(cur);
+        if(millis > 0)
+        {
+            ts.tv_sec = millis / 1000;
+            ts.tv_nsec = millis * 1000000;
+            sc_lwt_settimeout(cur, &ts);
+            CL_DEBUG("curlthread: set timeout %s millis\n", millis);
+        }
+        else if(millis == 0)
+        {
+            block = false;
+        }
+
+        if(block)
+        {
+            CL_DEBUG("curlthread: yielding\n");
+            sc_lwt_set_state(cur, SC_LWT_BLOCKED);
+            sc_lwt_yield();
+            CL_DEBUG("CURLTHREAD: WAKE UP\n");
+            if(sc_lwt_shutting_down())
+            {
+                CL_DEBUG("curlthread: shutting down\n");
+                break;
+            }
+        }
+
+        rv = cur_multi_perform(bor->curlm, &nhdl);
+        if(rv != CURLM_OK)
+        {
+            
+        }
     }
 
 }
