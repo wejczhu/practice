@@ -105,8 +105,25 @@ void cbot_curl_run(void *data)
         rv = cur_multi_perform(bor->curlm, &nhdl);
         if(rv != CURLM_OK)
         {
-            
+            CL_CRIT("curlm error %d: %s\n", rv, curl_multi_strerror(rv));
+            break;
         }
+
+        do
+        {
+            msg = curl_multi_info_read(bot->curlm, &nhdl);
+            if(msg && msg->msg == CURLMSG_DONE)
+            {
+                curl_easy_getinfo(msg->eady_handle, CURLINFO_PRIVATE, &waiting);
+                curl_multi_remove_handle(bot->curlm, waiting->handle);
+                waiting->result = msg->data.result;
+                sc_lwt_set_state(waiting->thread, SC_LWT_RUNNABLE);
+
+            }
+        } while (msg);
+
+        sc_lwt_remove_all(cur);
+        
     }
 
 }
