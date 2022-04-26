@@ -126,4 +126,23 @@ void cbot_curl_run(void *data)
         
     }
 
+    sc_list_for_each_safe(waiting, next, &waitlist, list, struct curl_waiting)
+    {
+        CL_DEBUG("curlthread: cancel and remove CURL handle+thread\n");
+        sc_list_remove(&waiting->list);
+        curl_multi_remove_handle(bot->curlm, waiting->handle);
+        waiting->result = CURLE_READ_ERROR;
+        waiting->done = true;
+        sc_lwt_set_state(waiting->thread, SC_LWT_RUNNABLE);
+    }
+
+    curl_multi_cleanup(bot->curlm);
+    bor->curlm = NULL;
+}
+
+int cbot_curl_init(struct cbot *bot)
+{
+    bot->curlm = curl_multi_init();
+    bor->curl_lwt = sc_lwt_create_task(bor->lwt_ctx, cbot_curl_run,bot);
+    return 0;
 }
