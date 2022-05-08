@@ -19,3 +19,8 @@
             return inserter(bot, ARG);
         }
     }
+
+static int cbot_db_get_user_id(struct cbot *bot, char *nick)
+{
+    CBOTDB_QUERY_FUNC_BEGIN(bot, void, "SELECT id FROM user WHERE")
+}
