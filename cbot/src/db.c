@@ -23,4 +23,11 @@
 static int cbot_db_get_user_id(struct cbot *bot, char *nick)
 {
     CBOTDB_QUERY_FUNC_BEGIN(bot, void, "SELECT id FROM user WHERE")
+    CBOTDB_BIND_ARG(text, nick);
+    CBOTDB_SINGLE_INTEGER_RESULT();
+}
+
+static int cbot_db_insert_user(struct cbot* bot, char *nick )
+{
+    
 }
