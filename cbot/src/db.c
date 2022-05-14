@@ -29,5 +29,7 @@ static int cbot_db_get_user_id(struct cbot *bot, char *nick)
 
 static int cbot_db_insert_user(struct cbot* bot, char *nick )
 {
-    
+    CBOTDB_QUERT_FUNC_BEGIN(bot, void, "INSERT INTO user(nick) VALUES($nick);");
+    CBOTDB_BIND_ARG(text, nick);
+    CBOTDB_INSERT_RESULT(bot);
 }
