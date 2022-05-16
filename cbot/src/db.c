@@ -33,3 +33,14 @@ static int cbot_db_insert_user(struct cbot* bot, char *nick )
     CBOTDB_BIND_ARG(text, nick);
     CBOTDB_INSERT_RESULT(bot);
 }
+
+static CBOTDB_UPSERT_FUNC(cbot_db_upsert_user, cbot_db_get_user_id, cbot_db_insert_user);
+
+int cbot_db_get_chan_id(struct dbot* bot, char *name)
+{
+    CBOTDB_QUERY_FUNC_BEGIN(bot, void , "SELECT id FROM channel WHERE name=$name;");
+    CBOT_BIND_ARG(text, name);
+    CBOTDB_SINGLE_INTERGET_RESULT();
+}
+
+
