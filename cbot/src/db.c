@@ -43,4 +43,10 @@ int cbot_db_get_chan_id(struct dbot* bot, char *name)
     CBOTDB_SINGLE_INTERGET_RESULT();
 }
 
+int cbot_db_insert_chan(struct cbot* bot, char *chan)
+{
+    CBOTDB_QURER_FUNC_BEGIN(bot, void ,"INSERT INTO channel(name) VALUES($chan);");
+    CBOTDB_BIND_ARG(text, chan);
+    CBOTDB_INSERT_RESULT(bot);
+}
 
