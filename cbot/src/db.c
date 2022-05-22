@@ -50,3 +50,16 @@ int cbot_db_insert_chan(struct cbot* bot, char *chan)
     CBOTDB_INSERT_RESULT(bot);
 }
 
+static CBOT_UPSERT_FUNC(cbot_db_upsert_chan, cbot_db_chan_id, 
+                        cbot_db_insert_chan);
+
+int cbot_db_upsert_membership(struct cbot *bot, int user_id, int chan_id) 
+{
+    CBOTDB_QUERY_FUNC_BEGIN(bot, void, 
+                            "INSERT INTO membership(user_id, channel_id)"
+                            "VALUES($user_id, $chan_id"
+                            "ON CONFLICT DO NOTHING;)"
+    CBOTDB_BIND_ARG(int, user_id);
+    CBOTDB_BIND_ARG(int, chan_id);
+    SBOTDB_NO_RESULT();
+}
