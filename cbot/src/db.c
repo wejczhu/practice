@@ -61,5 +61,20 @@ int cbot_db_upsert_membership(struct cbot *bot, int user_id, int chan_id)
                             "ON CONFLICT DO NOTHING;)"
     CBOTDB_BIND_ARG(int, user_id);
     CBOTDB_BIND_ARG(int, chan_id);
-    SBOTDB_NO_RESULT();
+    CBOTDB_NO_RESULT();
 }
+
+int cbot_get_members(struct cbot *bot, char *chan, struct sc_list_head *head)
+{
+    CBOTDB_QUERY_FUNC_BEGIN(bot, struct cbot_user_info,
+                            "select u.nick, u.realname "
+                            "FROM user u "
+                            " INNER JOIN membership m ON u.id=m.user_id"
+                            " INNER JOIN channel c ON c.id=m.channel_id"
+                            "WHERE c.name=$chan;");
+    CBOTDB_BIND_ARG(text, chan);
+    CBOTDB_LIST_RESULT(bot, head, CBOTDB_OUTPUT(text, 0, username);
+                       CBOTDB_OUTPUT(text, 1, realname););
+}
+
+
