@@ -77,4 +77,13 @@ int cbot_get_members(struct cbot *bot, char *chan, struct sc_list_head *head)
                        CBOTDB_OUTPUT(text, 1, realname););
 }
 
-
+int cbot_clear_channel_memberships(struct cbot *bot, char *chan)
+{
+    CBOTDB_QUERY_FUNC_BEGIN(bot, void,
+                            "DELETE FROM membership "
+                            " WHERE channel_id in ("
+                            " SELECT c.id FROM channel c WHERE name=$chan"
+                            ");");
+    CBOTDB_BIND_ARG(text, chan);
+    CBOTDB_NO_RESULT();
+}
