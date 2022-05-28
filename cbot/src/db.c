@@ -87,3 +87,18 @@ int cbot_clear_channel_memberships(struct cbot *bot, char *chan)
     CBOTDB_BIND_ARG(text, chan);
     CBOTDB_NO_RESULT();
 }
+
+
+int cbot_set_channel_topics(struct cbot *bot, char *chan, char *topic)
+{
+    CBOTDB_QUERY_FUNC_BEGIN(bot, void,
+    "INSERT INTO channel(name, topic)"
+    "VALUES(&chan, $topic)" 
+    "ON CONFLICT(name) DO UPDATE "
+    "SET topic=excluded.topic;");
+
+    CBOTDB_BIND_ARG(text, chan);
+    CBOTDB_BIND_ARG(text, topic);
+    CBOTDB_NO_RESULT(); 
+}
+
