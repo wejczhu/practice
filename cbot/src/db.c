@@ -102,3 +102,14 @@ int cbot_set_channel_topics(struct cbot *bot, char *chan, char *topic)
     CBOTDB_NO_RESULT(); 
 }
 
+void cbot_user_info_free(struct cbot_user_info *info)
+{
+    free(info->username);
+    if(info->realname)
+    {
+        free(info->realname);
+    }
+
+    free(info);
+}
+
