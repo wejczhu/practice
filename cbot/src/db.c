@@ -113,3 +113,11 @@ void cbot_user_info_free(struct cbot_user_info *info)
     free(info);
 }
 
+void cbot_user_info_free_all(struct sc_list_head *head)
+{
+    struct cbot_usr_info *info, *next;
+    sc_list_for_each_safe(info, next, head, list, struct cbot_user_info)
+    {
+        cbot_user_info_free(info);
+    }
+}
