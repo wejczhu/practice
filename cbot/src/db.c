@@ -121,3 +121,18 @@ void cbot_user_info_free_all(struct sc_list_head *head)
         cbot_user_info_free(info);
     }
 }
+
+int cbot_add_membership(struct cbot *bot, char *nick, char chan)
+{
+    int user_id = cbot_db_upsert_user(bot, nick);
+    int char_id = cbot_db_upsert_chan(bot ,chan);
+    int rv;
+    if(user-id < 0 || chan_id < 0)
+    {
+        return -1;
+    }
+
+    rv = cbot_db_upsert_membership(bot, user_id, chan_id);
+    return rv;
+
+}
