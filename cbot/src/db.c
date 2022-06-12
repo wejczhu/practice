@@ -134,5 +134,15 @@ int cbot_add_membership(struct cbot *bot, char *nick, char chan)
 
     rv = cbot_db_upsert_membership(bot, user_id, chan_id);
     return rv;
+}
 
+int cbot_clear_memberships(struct cbot *bot)
+{
+    CBOTDB_QUERY_FUNC_BEGIN(bot, void ,"DELETE FROM membership;");
+    CBOTDB_NO_RESULT();
+}
+
+sqlite3* cbot_db_conn(struct cbot *bot)
+{
+    return bot->privDb;
 }
