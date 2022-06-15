@@ -146,3 +146,24 @@ sqlite3* cbot_db_conn(struct cbot *bot)
 {
     return bot->privDb;
 }
+
+int create_schema_registry(struct cbot *bot)
+{
+    int rv;
+    char* errmsg = NULL;
+    char *stmts = "CREATE TABLE IF NOT EXISTS cbot_schema_registry ( "
+                  " id INTEGER PRIMARY KEY ASC, "
+                  " name TEXT NOT NULL UNIQUE, "
+                  " version INTEGER NOT NULL "
+                  "); ";
+
+    rv = sqlite3_exec(bot->privDb, stmts, NULL, NULL, &errmsg);
+    if(rv != SQLITE_OK)
+    {
+        CL_CRIT("sqlite error creating tables: %s\n", errmsg);
+        sqlite3_free(errmsg);
+        return -1;
+    }
+
+    return 0;
+}
