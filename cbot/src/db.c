@@ -167,3 +167,12 @@ int create_schema_registry(struct cbot *bot)
 
     return 0;
 }
+
+static int get_schema_version(struct cbot *bot, char *name)
+{
+    CBOTDB_QUERY_FUNC_BEGIN(bot, void,
+                            "SELECT version FROM cbot_schema_registry 
+                             WHERE name=$name;");
+    CBOTDB_BIND_ARG(text, name);
+    CBOTDB_SINGLE_INTEGER_RESULT();
+}
