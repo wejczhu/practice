@@ -176,3 +176,19 @@ static int get_schema_version(struct cbot *bot, char *name)
     CBOTDB_BIND_ARG(text, name);
     CBOTDB_SINGLE_INTEGER_RESULT();
 }
+static int query_and_update_schema_version(struct cbot* bot, const char *name,
+                                           unsigned int version,
+                                           const char *query)
+{
+    int rv = 0;
+    char *errmsg = NULL;
+    struct sc_charbuf cb;
+    sc_cb_init(&cb, 1024);
+
+    sc_cb_init(&cb,
+               "BIGIN INTO cbot_schema_registry(name, version "
+               “VALUES ()”)
+
+
+
+}
