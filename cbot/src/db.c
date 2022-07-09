@@ -191,4 +191,18 @@ static int query_and_update_schema_version(struct cbot* bot, const char *name,
 
 
 
+    rv = sqlite3_exec(bot->privDb, cb.buf, NULL, NULL, &errmsg);
+    if(rv != SQLITE_OK)
+    {
+        CL_CRIT("table registration error: %s\n", errmsg);
+        sqlite3_free(errmsg);
+        rv = -1;
+        goto out;
+    }
+
+    rv = 0;
+
+out:
+    sc_cb_destroy(&cb);
+    return rv;
 }
