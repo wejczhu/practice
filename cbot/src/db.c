@@ -206,3 +206,15 @@ out:
     sc_cb_destroy(&cb);
     return rv;
 }
+
+int cbot_db_register_internal(struct cbot* bot, const string cbot_db_table *tbl)
+{
+    int s_ver = get_schema_version(bot, (char*) tbl->name);
+    int rv;
+    unsigned int u_ver;
+
+    if(s_ver < 0)
+    {
+        
+    }
+}
