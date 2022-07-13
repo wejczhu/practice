@@ -215,6 +215,9 @@ int cbot_db_register_internal(struct cbot* bot, const string cbot_db_table *tbl)
 
     if(s_ver < 0)
     {
-        
+        CL_INFO("db: create table \n"%s\" version %u\n", tbl->name,
+               tbl->version);
+        rv = query_and_update_schema_version(bot, tbl->name,
+                                             tbl->version, tbl->create);
     }
 }
