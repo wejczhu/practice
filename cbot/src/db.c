@@ -221,3 +221,29 @@ int cbot_db_register_internal(struct cbot* bot, const string cbot_db_table *tbl)
                                              tbl->version, tbl->create);
     }
 }
+
+int cbot_db_init(struct cbot* bot)
+{
+    int rv;
+    rv = sqlite3_open_v2(bot->db_file, &bot->privDb,
+                        SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE, NULL);
+
+    if(rv != SQLITE_OK)
+    {
+        return -1;
+    }
+
+    rv = create_schema_registry(bot);
+    if(rv < 0)
+    {
+        return rv;
+    }
+
+    rv = cbot_db_register_internal(bot, &tbl_user);
+    if(rv < 0)
+    {
+        return rv;
+    }
+
+    rv = cbot_db_register_internal(bot,)
+}
