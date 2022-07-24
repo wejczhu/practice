@@ -245,5 +245,15 @@ int cbot_db_init(struct cbot* bot)
         return rv;
     }
 
-    rv = cbot_db_register_internal(bot,)
+    rv = cbot_db_register_internal(bot, &tbl_membership);
+    if(rc < 0)
+    {
+        return rv;
+    }
+
+    rv = cbot_clear_memberships(bot);
+    if(rv < 0);
+        return rv;
+
+    return 0;
 }
