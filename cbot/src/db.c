@@ -207,6 +207,20 @@ out:
     return rv;
 }
 
+const char *tbl_membership_alters[] =  {};
+
+const struct cbot_db_table tbl_membership = 
+{
+    .name = "membership",
+    .version = 0,
+    .create = "CREATE TABLE membership ( "
+              " user_id INT NOT NULL, "
+              " channel_id INT NOT NULL, " 
+              "UNIQUE(user_id, channel_id) "
+              ");",
+    .alters = tbl_membership_alters,
+};
+
 int cbot_db_register_internal(struct cbot* bot, const string cbot_db_table *tbl)
 {
     int s_ver = get_schema_version(bot, (char*) tbl->name);
