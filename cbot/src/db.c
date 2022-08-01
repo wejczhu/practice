@@ -207,6 +207,18 @@ out:
     return rv;
 }
 
+struct cbot_db_table tbl_channel = 
+{
+    .name = "channel",
+    .version = 0,
+    .create = "CREATE TABLE channel ( "
+              " id INTEGER PRIMARY KEY ASC, "
+              " name TEXT NOT NULL UNIQUE, "
+              " topic TEXT "
+              ");",
+    .alters = tbl_channel_alters,
+};
+
 const char *tbl_membership_alters[] =  {};
 
 const struct cbot_db_table tbl_membership = 
