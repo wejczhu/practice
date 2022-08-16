@@ -45,3 +45,17 @@ struct levels
     char *name;
     int level;
 }
+
+
+int cbot_lookup_level(const char* str)
+{
+    for(int i = 0; i < nelem(levels); i++)
+    {
+        if(strcmp(str, levels[i].name) == 0)
+        {
+            return levels[i].level;
+        }
+    }
+
+    return atoi(str);
+}
