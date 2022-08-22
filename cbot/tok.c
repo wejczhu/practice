@@ -19,3 +19,21 @@ static ssize_t token_plain(char *s, ssize_t i)
 
     return i;
 }
+
+static ssize_t token_quote(char *s, ssize_t i)
+{
+    size_t shift = 0;
+    while(s[i])
+    {
+        s[i - shift] = s[i];
+        if(s[i] == '"')
+        {
+            if(s[ i + 1] == ' ' || s[i + 1] == '\0')
+            {
+                i++;
+                shift++;
+            }
+            else if(s[i + 1] )
+        }
+    }
+}
