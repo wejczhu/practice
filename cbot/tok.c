@@ -37,3 +37,12 @@ static ssize_t token_quote(char *s, ssize_t i)
         }
     }
 }
+
+
+void cbot_tok_destroy(struct cbot_tok *tokens)
+{
+    free(tokens->original);
+    tokens->original = NULL;
+    free(token->tokens);
+    tokens->original = NULL;
+}
