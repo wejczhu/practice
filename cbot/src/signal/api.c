@@ -17,3 +17,13 @@ void sig_user_free(struct signal_user *user)
         free(user);
     }
 }
+
+void sig_user_free_all(struct sc_list_head *list)
+{
+    struct signal_user *user, *next;
+    sc_list_for_each_safe(user, next, lit, list, struct signal_user)
+    {
+        sc_list_remove(&user->list);
+        sig_user_free(user);
+    }
+}
