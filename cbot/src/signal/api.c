@@ -27,3 +27,9 @@ void sig_user_free_all(struct sc_list_head *list)
         sig_user_free(user);
     }
 }
+
+static struct signal_user *__sig_parse_profile(struct jmsg *jm, size_t ix)
+{
+    struct signal_user *user;
+    char 
+}
