@@ -55,3 +55,14 @@ static struct signal_user *__sig_parse_profile(struct jmsg *jm, size_t ix)
 
     return user;
 }
+
+static struct signal_user *__sig_get_profile(struct cbot_signal_backend *sig,
+                                             const char * ident,
+                                             const char * kind)
+{
+    struct jmsg *jm = NULL;
+    struct signal_user *user;
+
+    fprintf(sig->ws,
+    )
+}
